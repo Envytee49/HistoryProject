@@ -1,9 +1,12 @@
 package Crawl;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -80,8 +83,8 @@ public class CrawlEvent {
 					String title = row.select("td:nth-of-type(1)").text();
 					row.select("sup").remove();
 					if(title.equals("Thời gian")) {
-						date = row.select("td:nth-of-type(2)").text();
-;						}
+						date = row.select("td:nth-of-type(2)").text().replace("\u2013", "-");
+						}
 					else if(title.equals("Địa điểm")) {
 						location = row.select("td:nth-of-type(2)").text();
 					}

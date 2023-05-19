@@ -13,6 +13,7 @@ public class Events {
 		entity.put("id", event.getId());
 		entity.put("name", event.getName());
 		entity.put("date", event.getDate());
+		entity.put("location", event.getLocation());
 		entity.put("cause", event.getCause());
 		entity.put("result", event.getResult());
 		JSONObject relatedFigure = new JSONObject();
@@ -24,7 +25,7 @@ public class Events {
 		
 		try {
 	         FileWriter file = new FileWriter("D:\\Code\\Java\\Test\\json\\Event\\"+event.getId()+".json");
-	         file.write(entity.toJSONString());
+	         file.write(entity.toJSONString().replace("\\",""));
 	         file.close();
 	      } catch (IOException e) {
 	         e.printStackTrace();
