@@ -6,7 +6,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import Database.Festivals;
 import Model.Festival;
 
 public class CrawlFestival {
@@ -34,13 +33,4 @@ public class CrawlFestival {
 			e.printStackTrace();
 		}
 	}
-//	public static void main(String[] args) {
-//		crawlData();
-//		ArrayList<Festival> f = Festivals.collection.getEntityData();
-//		for(int i = 0; i < f.size(); i++) {
-//			System.out.println(f.get(i).getId()+" "+f.get(i).getName()+" "+
-//								f.get(i).getDate()+" "+f.get(i).getLocation()+ " "+
-//								f.get(i).getFirstTime()+" "+f.get(i).getNote()+" "+ f.get(i).getRelatedFigure());
-//		}
-//	}
 }

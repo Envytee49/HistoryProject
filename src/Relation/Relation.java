@@ -3,9 +3,11 @@ import Crawl.*;
 import Database.*;
 public class Relation {
 	public static void crawlData() {
-		CrawlFestival.crawlData();
+//		CrawlFestival.crawlData();
+		CrawlEvent.crawlData();
 	}
 	public static void createRelation() {
-		Festivals.saveToJSON();
+//		Festivals.saveToJSON();
+		Events.saveToJSON();
 }
 }
