@@ -73,7 +73,7 @@ public class CrawlEvent {
             	}	      
             }
             // Get event name
-            name = doc.select("div.page-header").text();
+            name = doc.select("div.page-header").text().replace("\u2013", "-");
             
             // Lay ra bang thong tin gom thoi gian dia diem ket qua
             Element infoTable = doc.selectFirst("table[cellpadding=0]");
@@ -96,51 +96,6 @@ public class CrawlEvent {
 					}					
 				}
             }         
-                    Element firstParagraph = doc.selectFirst("p");
-                    firstParagraph.select("sup").remove(); // [class~=(annotation).*]
-                    String firstPContent = firstParagraph.text();
-
-                    // The b dau tien la ten cua su kien, co the gom ca thoi gian
-                    Element firstBTag = firstParagraph.selectFirst("b");
-                    if (firstBTag != null) {
-                        String firstBTagContent = firstBTag.text();
-                        String[] splitArray = firstBTagContent.split(",");
-                        if (splitArray.length > 1) {             
-                            if (date.equals("Chưa rõ")) date = splitArray[1].trim();
-                        }
-                    }
-                    Pattern p;
-                    Matcher m;
-                    // Loc ra ket qua cua su kien
-                    p = Pattern.compile("(Kết quả|cuối cùng)[^.]*[.]", Pattern.CASE_INSENSITIVE);
-                    m = p.matcher(firstPContent);
-
-                    if (m.find()) {
-                        String findResult = m.group(0);
-                        if (result.equals("Chưa rõ")) {
-                            result = findResult.substring(0, findResult.length() - 1);
-                        }
-                    }
-                    // Loc ra thoi gian cua su kien
-                    p = Pattern.compile("(xảy ra|diễn ra) (từ|vào)[^.]*[.]", Pattern.CASE_INSENSITIVE);
-                    m = p.matcher(firstPContent);
-
-                    if (m.find()) {
-                        String findResult = m.group(0);
-                        if (date.equals("Chưa rõ")) {
-                            date = findResult.substring(0, findResult.length() - 1);
-                        }
-                    }
-                    // Loc ra nguyen nhan cua tran chien
-                    p = Pattern.compile("(nhằm|bắt nguồn|do)[^.]*[.]", Pattern.CASE_INSENSITIVE);
-                    m = p.matcher(firstPContent);
-
-                    if (m.find()) {
-                        String findResult = m.group(0);
-                        if (cause.equals("Chưa rõ")) {
-                            cause = findResult.substring(0, findResult.length() - 1);
-                        }
-                    }
             new Event(name,date,location,cause,result,relatedFigure);
             
 		}catch (IOException e) {

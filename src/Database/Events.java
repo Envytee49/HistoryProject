@@ -1,39 +1,37 @@
 package Database;
-
-import java.io.FileWriter;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 import Model.Event;
-import org.json.simple.JSONObject;
 public class Events {
 	public static EntityData<Event> collection = new EntityData<>();
+	private static ObjectMapper mapper = new ObjectMapper();
+	private static String PATH = "D:\\Code\\Java\\Test\\json\\Event\\";
 	public static void writeJSON(Event event) {
-		JSONObject entity = new JSONObject();
-		entity.put("id", event.getId());
-		entity.put("name", event.getName());
-		entity.put("date", event.getDate());
-		entity.put("location", event.getLocation());
-		entity.put("cause", event.getCause());
-		entity.put("result", event.getResult());
-		JSONObject relatedFigure = new JSONObject();
-		for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {
-			if(entry.getKey()=="") continue;
-			relatedFigure.put(entry.getKey(), entry.getValue());
-		}
-		entity.put("relatedFigure", relatedFigure);
-		
 		try {
-	         FileWriter file = new FileWriter("D:\\Code\\Java\\Test\\json\\Event\\"+event.getId()+".json");
-	         file.write(entity.toJSONString().replace("\\",""));
-	         file.close();
-	      } catch (IOException e) {
-	         e.printStackTrace();
-	      }
+			mapper.writeValue(new File(PATH+event.getId()+".json"), event);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	public static void queryJSON() {
+		// Get number of files in folder
+		
+	}
+	
 	public static void saveToJSON() {
 		for(Event event : collection.getEntityData()) {
 			event.save();
 		}
+	}
+	public static void main(String[] args) {
+		queryJSON();
 	}
 }
