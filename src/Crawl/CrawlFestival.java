@@ -26,11 +26,20 @@ public class CrawlFestival {
 				for(String split : splitContent) {
 					relatedFigure.add(split);
 				}
-				String note = r.select("td:nth-of-type(6)").text();
-				new Festival(name, date, location, firstTime, note, relatedFigure);
+				String noteURL= "https://vi.wikipedia.org/" + r.select("td:nth-of-type(3) a").attr("href");
+				Document noteDoc = Jsoup.connect(noteURL).get();
+				String note ="";
+				Element noteElement = noteDoc.selectFirst("p");
+				noteElement.select("sup").remove();
+				note = noteElement.text().split("\\.")[0];
+				if(note.contains("Trình")){
+					note = r.select("td:nth-of-type(6)").text();
+				}
+				new Festival(name, date, location, firstTime, note, relatedFigure);	
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 }
