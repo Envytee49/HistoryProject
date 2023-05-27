@@ -1,8 +1,7 @@
 package Database;
 
 import java.util.ArrayList;
-
-import Model.Festival;
+import java.util.Collections;
 import Model.HistoricalEntity;
 
 public class EntityData <T extends HistoricalEntity> {
@@ -19,6 +18,12 @@ public class EntityData <T extends HistoricalEntity> {
 	}
 	public void add(T entity) {
 		entityData.add(entity);
+	}
+	public void sortByName() {
+		Collections.sort(entityData, (o1, o2) -> o1.getName().compareTo(o2.getName())); 
+	}
+	public void sortById() {
+		Collections.sort(entityData,(o1,o2) -> o1.getId() > o2.getId() ? 1 : -1);
 	}
 	
 	

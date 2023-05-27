@@ -47,6 +47,7 @@ public class Event extends HistoricalEntity {
 		Events.collection.add(this);
 		
 	}
+	public Event() {}
 	public void save() {
 		Events.writeJSON(this);
 	}

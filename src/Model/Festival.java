@@ -60,6 +60,7 @@ public class Festival extends HistoricalEntity {
 		Festivals.collection.add(this);
 		
 	}
+	public Festival() {}
 	public void save() {
 		Festivals.writeJSON(this);
 	}

@@ -1,13 +1,16 @@
 package Database;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Map;
-import Model.Festival;
-import org.json.simple.JSONObject;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import Model.Event;
+import Model.Festival;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +28,24 @@ public class Festivals {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
+	}
+	public static void queryJSON() {
+		try {
+            @SuppressWarnings("resource")
+			Stream<Path> paths = Files.list(Paths.get("D:\\Code\\Java\\Test\\json\\Festival\\"));
+            ArrayList<Festival> festivals = (ArrayList<Festival>) paths.map(path -> {
+                try {
+                    return mapper.<Festival>readValue(path.toFile(), Festival.class);
+                } catch (IOException e){
+                    e.printStackTrace();
+                    return null;
+                }
+            }).collect(Collectors.toList());
+            collection.setEntityData(festivals);
+            collection.sortById();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 	}
 	public static void saveToJSON() {
 		for(Festival fes : collection.getEntityData()) {
