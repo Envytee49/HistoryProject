@@ -9,5 +9,12 @@ public class HistoricalEntity {
 	public String getName() {
 		return name;
 	}
+	public HistoricalEntity() {
+		
+	}
+	public HistoricalEntity(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	
 }

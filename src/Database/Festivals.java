@@ -1,5 +1,4 @@
 package Database;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +29,7 @@ public class Festivals {
 	public static void queryJSON() {
 		try {
             @SuppressWarnings("resource")
-			Stream<Path> paths = Files.list(Paths.get("D:\\Code\\Java\\Test\\json\\Festival\\"));
+			Stream<Path> paths = Files.list(Paths.get(PATH));
             ArrayList<Festival> festivals = (ArrayList<Festival>) paths.map(path -> {
                 try {
                     return mapper.<Festival>readValue(path.toFile(), Festival.class);

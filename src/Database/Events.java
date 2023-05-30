@@ -29,7 +29,7 @@ public class Events {
 	public static void queryJSON() {
 		try {
 			@SuppressWarnings("resource")
-            Stream<Path> paths = Files.list(Paths.get("D:\\Code\\Java\\Test\\json\\Event\\"));
+            Stream<Path> paths = Files.list(Paths.get(PATH));
             ArrayList<Event> events = (ArrayList<Event>) paths.map(path -> {
                 try {
                     return mapper.<Event>readValue(path.toFile(), Event.class);
