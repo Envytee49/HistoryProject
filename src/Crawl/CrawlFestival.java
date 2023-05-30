@@ -43,8 +43,5 @@ public class CrawlFestival {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
-		crawlData();
-	}
 	
 }
