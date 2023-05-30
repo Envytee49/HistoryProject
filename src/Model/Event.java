@@ -44,10 +44,13 @@ public class Event extends HistoricalEntity {
 		for(String entity : relatedFigure) {
 			this.relatedFigure.put(entity, null);
 		}
-		Events.collection.add(this);
+		// When attributes are set, then the object is add to the database
+		Events.collection.add(this); 
 		
 	}
+	// Default constructor to apply ObjectMapper
 	public Event() {}
+	// Save to json 'this' object
 	public void save() {
 		Events.writeJSON(this);
 	}

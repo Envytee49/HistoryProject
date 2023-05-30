@@ -9,10 +9,17 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonHelper {
-	public static ObjectMapper mapper = new ObjectMapper();
+	// Initialize ObjectMapper to write json files
+	public static ObjectMapper mapper = new ObjectMapper(); 
+	// This is the absolute path to the directory of the project
 	public static String PATH = FileSystems
             .getDefault().getPath("./").normalize()
             .toAbsolutePath() + "\\json";
+	
+	/*
+	 * writeJSON takes 2 arguments fileName : the name of the file 
+	 * object : the object such as Era, Event, Festival,..
+	 */
 	public static void writeJSON(String fileName, Object object) {
 		try {
 			mapper.writeValue(new File(PATH+ fileName), object);

@@ -15,13 +15,15 @@ public class CrawlFestival {
 			Document doc = Jsoup.connect(URL).get();
 			Elements row = doc.select("table.prettytable.wikitable tr");
 			for(Element r : row) {
-				String date = r.select("td:nth-of-type(1)").text();
-				String location = r.select("td:nth-of-type(2)").text();
-				String name = r.select("td:nth-of-type(3)").text();
-				String firstTime = r.select("td:nth-of-type(4)").text();
-				if (name.equals("")) continue;
-				String content = r.select("td:nth-of-type(5)").text();
-				String[] splitContent = content.split(",");
+				String date = r.select("td:nth-of-type(1)").text(); // get date
+				String location = r.select("td:nth-of-type(2)").text(); // get location
+				String name = r.select("td:nth-of-type(3)").text(); // get name
+				String firstTime = r.select("td:nth-of-type(4)").text(); // get firstTime ~ lan dau to chuc 
+				System.out.println(name);
+				if (name.equals("")) continue; // do not crawl the first row
+				System.out.println(name);
+				String content = r.select("td:nth-of-type(5)").text(); // get content of related figures
+				String[] splitContent = content.split(","); 
 				ArrayList<String> relatedFigure = new ArrayList<>();
 				for(String split : splitContent) {
 					relatedFigure.add(split);
@@ -40,6 +42,9 @@ public class CrawlFestival {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public static void main(String[] args) {
+		crawlData();
 	}
 	
 }

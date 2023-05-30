@@ -57,10 +57,13 @@ public class Festival extends HistoricalEntity {
 		for(String entity : relatedFigure) {
 			this.relatedFigure.put(entity, null);
 		}
+		// When attributes are set, then the object is add to the database
 		Festivals.collection.add(this);
 		
 	}
+	// Default constructor to apply ObjectMapper
 	public Festival() {}
+	// Save to json 'this' object
 	public void save() {
 		Festivals.writeJSON(this);
 	}

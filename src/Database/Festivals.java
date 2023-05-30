@@ -8,12 +8,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import Model.Festival;
 public class Festivals {
+	// This is the database for the entity 
 	public static EntityData<Festival> collection = new EntityData<>();
+	// Folder name
 	public static String dirName = "\\Festival";
+	// Write every object to json files
 	public static void writeJSON(Festival festival) {
 		String fileName = dirName + "\\" + festival.getId() + ".json";
 		JsonHelper.writeJSON(fileName, festival);
 	}
+	// Query from json files back to objects 
+	// add it to the database 'collection'
 	public static void queryJSON() {
 		try {
             @SuppressWarnings("resource")
@@ -32,6 +37,10 @@ public class Festivals {
             e.printStackTrace();
         }
 	}
+	/*
+	 * For every object in the 'collection' database 
+	 * Save it in JSON file
+	 */
 	public static void saveToJSON() {
 		for(Festival fes : collection.getEntityData()) {
 			fes.save();

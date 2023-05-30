@@ -8,12 +8,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import Model.Event;
 public class Events {
+	// This is the database for the entity 
 	public static EntityData<Event> collection = new EntityData<>();
+	// Folder name
 	public static String dirName = "\\Event";
+	// Write every object to json files
 	public static void writeJSON(Event event) {
 		String fileName = dirName + "\\" + event.getId() + ".json";
 		JsonHelper.writeJSON(fileName, event);
 	}
+	// Query from json files back to objects 
+	// add it to the database 'collection'
 	public static void queryJSON() {
 		try {
 			@SuppressWarnings("resource")
@@ -32,6 +37,10 @@ public class Events {
             e.printStackTrace();
         	}	
 	}
+	/*
+	 * For every object in the 'collection' database 
+	 * Save it in JSON file
+	 */
 	public static void saveToJSON() {
 		for(Event event : collection.getEntityData()) {
 			event.save();

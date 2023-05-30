@@ -10,6 +10,7 @@ import Model.HistoricalFigure;
 
 public class Relation {
 	public static void crawlData() {
+		// Crawl all data from url
 		CrawlFestival.crawlData();
 		CrawlEvent.crawlData();
 	}
@@ -47,6 +48,11 @@ public class Relation {
         }
     }
 	public static void createRelation() {
+		// Step 1
+		// This part create relation by setting the 'value' as 'key'
+		// ... implementation
+		// Step 2
+		// Save entities data to JSON files
 		Festivals.saveToJSON();
 		Events.saveToJSON();
 }
