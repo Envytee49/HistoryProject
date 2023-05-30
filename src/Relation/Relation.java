@@ -11,7 +11,7 @@ import Model.HistoricalFigure;
 public class Relation {
 	public static void crawlData() {
 		CrawlFestival.crawlData();
-//		CrawlEvent.crawlData();
+		CrawlEvent.crawlData();
 	}
 	public static void addCharAndFesRelation() {
         // Lay nhan vat
@@ -48,6 +48,6 @@ public class Relation {
     }
 	public static void createRelation() {
 		Festivals.saveToJSON();
-//		Events.saveToJSON();
+		Events.saveToJSON();
 }
 }
