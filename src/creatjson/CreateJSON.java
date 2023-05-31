@@ -1,5 +1,5 @@
-package CreateJSON;
-import Relation.Relation;
+package creatjson;
+import relation.Relation;
 public class CreateJSON {
 
 	public static void main(String[] args) {

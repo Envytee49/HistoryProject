@@ -1,12 +1,12 @@
-package Relation;
+package relation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Crawl.*;
-import Database.*;
-import Model.Festival;
-import Model.HistoricalFigure;
+import crawl.*;
+import database.*;
+import model.Festival;
+import model.HistoricalFigure;
 
 public class Relation {
 	public static void crawlData() {

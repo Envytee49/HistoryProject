@@ -1,10 +1,10 @@
-package Model;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Database.*;
+import database.*;
 public class Event extends HistoricalEntity {
 	private String date;
 	private String location;

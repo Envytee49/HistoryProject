@@ -1,11 +1,14 @@
-package Crawl;
+package crawl;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import Model.Event;
+
+import model.Event;
 
 public class CrawlEvent {
 	private static ArrayList<String> eventLink = new ArrayList<>();
@@ -70,7 +73,7 @@ public class CrawlEvent {
             // Get event name
             name = doc.select("div.page-header").text().replace("\u2013", "-");
             
-            // Get location, cause and result
+            // Get date, location, cause and result
             Element infoTable = doc.selectFirst("table[cellpadding=0]");
             if(infoTable != null) {
             	Elements infoRow = infoTable.select("tr");
@@ -90,7 +93,9 @@ public class CrawlEvent {
 						result = row.select("td:nth-of-type(2)").text();
 					}					
 				}
-            }         
+            }     
+            // if infoTable == NULL then
+            
             new Event(name,date,location,cause,result,relatedFigure);
             
 		}catch (IOException e) {

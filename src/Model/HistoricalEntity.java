@@ -1,5 +1,5 @@
-package Model;
-import Database.*;
+package model;
+import database.*;
 public class HistoricalEntity {
 	protected int id;
 	protected String name;

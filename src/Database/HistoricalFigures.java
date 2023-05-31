@@ -1,6 +1,6 @@
-package Database;
+package database;
 
-import Model.HistoricalFigure;
+import model.HistoricalFigure;
 
 public class HistoricalFigures {
 	public static EntityData<HistoricalFigure> collection = new EntityData<>();

@@ -1,8 +1,9 @@
-package Database;
+package database;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import Model.HistoricalEntity;
+
+import model.HistoricalEntity;
 
 /* This is generic 
  * as to whatever class 
