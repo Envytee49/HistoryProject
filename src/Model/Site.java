@@ -1,10 +1,10 @@
-package Model;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Database.Sites;
+import database.Sites;
 
 public class Site extends HistoricalEntity{
 	private String location;
@@ -14,7 +14,7 @@ public class Site extends HistoricalEntity{
 	private String approved;
 	private Map<String, Integer> relatedFigure = new HashMap<>();
 	private Map<String, Integer> relatedFestival = new HashMap<>();
-	
+	private Sites sites = new Sites();
 	
 	public Site() {
 		
@@ -96,7 +96,7 @@ public class Site extends HistoricalEntity{
 	}
 
 	public void save() {
-		Sites.writeJSON(this);
+		sites.writeJSON(this);
 	}
 	
 }

@@ -1,50 +1,32 @@
-package Database;
+package database;
+import model.Site;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import Model.Site;
-
-public class Sites {
-	// This is the database for the entity 
+public class Sites extends DataManipulation{
+		// This is the database for the entity 
 		public static EntityData<Site> collection = new EntityData<>();
+		// This is an object to interact with data
+		private JsonHelper<Site> json = new JsonHelper<>();
 		// Folder name
-		public static String dirName = "\\Site";
+		public String dirName = "\\Site";
 		// Write every object to json files
-		public static void writeJSON(Site site) {
-			String fileName = dirName + "\\" + site.getId() + ".json";
-			JsonHelper.writeJSON(fileName, site);
+		@Override
+		public void writeJSON(Object object) {
+			String fileName = dirName + "\\" + ((Site)object).getId() + ".json";
+			json.writeJSON(fileName, object);
 		}
 		// Query from json files back to objects 
 		// add it to the database 'collection'
-		public static void queryJSON() {
-			try {
-	            @SuppressWarnings("resource")
-				Stream<Path> paths = Files.list(Paths.get(JsonHelper.PATH + dirName));
-	            ArrayList<Site> sites = (ArrayList<Site>) paths.map(path -> {
-	                try {
-	                    return JsonHelper.mapper.<Site>readValue(path.toFile(), Site.class);
-	                } catch (IOException e){
-	                    e.printStackTrace();
-	                    return null;
-	                }
-	            }).collect(Collectors.toList());
-	            collection.setEntityData(sites);
-	            collection.sortById();
-	        } catch (IOException e){
-	            e.printStackTrace();
-	        }
+		@Override
+		public void queryJSON() {		
+            collection.setEntityData(json.queryJSON(dirName));
+            collection.sortById();
 		}
 		/*
 		 * For every object in the 'collection' database 
 		 * Save it in JSON file
 		 */
-		public static void saveToJSON() {
+		@Override
+		public void saveToJSON() {
 			for(Site site: collection.getEntityData()) {
 				site.save();
 			}

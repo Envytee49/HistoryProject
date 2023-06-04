@@ -1,4 +1,4 @@
-package Crawl;
+package crawl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import Model.Site;
+import model.Site;
 
 
 public class CrawlSite {
@@ -37,7 +37,6 @@ public class CrawlSite {
 				String link = "https://vi.wikipedia.org" + r.select("td:nth-of-type(1) a").attr("href");
 				Document related_doc = Jsoup.connect(link).get();
 				Element par = related_doc.selectFirst("p");
-				System.out.println(link);
 				Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
 				String firstPar = par.text();
 				if(firstPar.contains("xây") || pattern.matcher(par.text()).find()) {
@@ -89,6 +88,7 @@ public class CrawlSite {
 						relatedFestival.add(body_text.substring(id+2, ending));
 					}
 				}
+				System.out.println(name+" " + relatedFigure +" "+ relatedFestival+ " "+ constructionDate);
 				new Site(name, location, constructionDate, note, category, approved, relatedFigure, relatedFestival);
 			}
 				

@@ -1,6 +1,6 @@
 package model;
-import database.*;
-public class HistoricalEntity {
+public abstract class HistoricalEntity {
+	// Inheritance rules 
 	protected int id;
 	protected String name;
 	public int getId() {
@@ -16,5 +16,6 @@ public class HistoricalEntity {
 		this.id = id;
 		this.name = name;
 	}
+	public abstract void save();
 	
 }

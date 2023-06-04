@@ -1,48 +1,31 @@
 package database;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import model.Festival;
-public class Festivals {
+public class Festivals extends DataManipulation{
 	// This is the database for the entity 
 	public static EntityData<Festival> collection = new EntityData<>();
+	// This is an object to interact with data
+	private JsonHelper<Festival> json = new JsonHelper<>();
 	// Folder name
-	public static String dirName = "\\Festival";
+	private String dirName = "\\Festival";
 	// Write every object to json files
-	public static void writeJSON(Festival festival) {
-		String fileName = dirName + "\\" + festival.getId() + ".json";
-		JsonHelper.writeJSON(fileName, festival);
+	@Override
+	public void writeJSON(Object object) {
+		String fileName = dirName + "\\" + ((Festival) object).getId() + ".json";
+		json.writeJSON(fileName, object);
 	}
 	// Query from json files back to objects 
 	// add it to the database 'collection'
-	public static void queryJSON() {
-		try {
-            @SuppressWarnings("resource")
-			Stream<Path> paths = Files.list(Paths.get(JsonHelper.PATH + dirName));
-            ArrayList<Festival> festivals = (ArrayList<Festival>) paths.map(path -> {
-                try {
-                    return JsonHelper.mapper.<Festival>readValue(path.toFile(), Festival.class);
-                } catch (IOException e){
-                    e.printStackTrace();
-                    return null;
-                }
-            }).collect(Collectors.toList());
-            collection.setEntityData(festivals);
-            collection.sortById();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+	@Override
+	public void queryJSON() {
+		collection.setEntityData(json.queryJSON(dirName));
+		collection.sortById();
 	}
 	/*
 	 * For every object in the 'collection' database 
 	 * Save it in JSON file
 	 */
-	public static void saveToJSON() {
+	@Override
+	public void saveToJSON() {
 		for(Festival fes : collection.getEntityData()) {
 			fes.save();
 		}

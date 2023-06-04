@@ -11,6 +11,7 @@ public class Festival extends HistoricalEntity {
 	private String firstTime;
 	private String note;
 	private Map<String, Integer> relatedFigure = new HashMap<>();
+	private Festivals festivals = new Festivals();
 	public String getDate() {
 		return date;
 	}
@@ -64,7 +65,8 @@ public class Festival extends HistoricalEntity {
 	// Default constructor to apply ObjectMapper
 	public Festival() {}
 	// Save to json 'this' object
+	@Override
 	public void save() {
-		Festivals.writeJSON(this);
+		festivals.writeJSON(this);
 	}
 }
