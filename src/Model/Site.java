@@ -94,7 +94,7 @@ public class Site extends HistoricalEntity{
 	public void setRelatedFestival(Map<String, Integer> relatedFestival) {
 		this.relatedFestival = relatedFestival;
 	}
-
+	@Override
 	public void save() {
 		sites.writeJSON(this);
 	}

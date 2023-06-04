@@ -1,6 +1,6 @@
 package database;
 import model.Festival;
-public class Festivals extends DataManipulation{
+public class Festivals implements DataManipulation{
 	// This is the database for the entity 
 	public static EntityData<Festival> collection = new EntityData<>();
 	// This is an object to interact with data

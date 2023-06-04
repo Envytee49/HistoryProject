@@ -1,7 +1,7 @@
 package database;
 
-public abstract class DataManipulation {
-	public abstract void writeJSON(Object object);
-	public abstract void queryJSON();
-	public abstract void saveToJSON();
+public interface DataManipulation {
+	public void writeJSON(Object object);
+	public void queryJSON();
+	public void saveToJSON();
 }

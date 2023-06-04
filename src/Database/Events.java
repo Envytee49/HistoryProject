@@ -1,6 +1,6 @@
 package database;
 import model.Event;
-public class Events extends DataManipulation{
+public class Events implements DataManipulation{
 	// This is the database for the entity - aggregation
 	public static EntityData<Event> collection = new EntityData<>();
 	// This is an object to interact with data

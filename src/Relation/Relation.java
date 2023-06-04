@@ -18,11 +18,15 @@ public class Relation {
 		
 		// Step 2
 		// Save entities data to JSON files
-//		Sites.saveToJSON();
+		
+		//Create instances
 		Festivals festivals = new Festivals();
 		Events events = new Events();
+		//Sites sites = new Sites();
 		
+		// Save entities data to JSON files
 		festivals.saveToJSON();	
 		events.saveToJSON();
+		//sites.saveToJSON();
 }
 }
