@@ -19,9 +19,9 @@ import model.HistoricalEntity;
 */
 public class JsonHelper <T extends HistoricalEntity>{
 	// Initialize ObjectMapper to write json files
-	public static ObjectMapper mapper = new ObjectMapper(); 
+	private ObjectMapper mapper = new ObjectMapper(); 
 	// This is the absolute path to the directory of the project
-	public static String PATH = FileSystems
+	private String PATH = FileSystems
             .getDefault().getPath("./").normalize()
             .toAbsolutePath() + "\\json";
 	
@@ -40,6 +40,7 @@ public class JsonHelper <T extends HistoricalEntity>{
 			e.printStackTrace();
 		}	
 	}
+	// This method return an array list of type T
 	public ArrayList<T> queryJSON(String dirName) {
 		try {
             @SuppressWarnings("resource")
