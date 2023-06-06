@@ -6,9 +6,10 @@ import database.*;
 public class Relation {
 	public static void crawlData() {
 		// Crawl all data of entities
-		CrawlFestival.crawlData();
-		CrawlEvent.crawlData();
+//		CrawlFestival.crawlData();
+//		CrawlEvent.crawlData();
 //		CrawlSite.crawlData();
+		CrawlHistoricalFigure.crawlData();
 	}
 	public static void createRelation() {
 		// Step 1
@@ -22,11 +23,13 @@ public class Relation {
 		//Create instances
 		Festivals festivals = new Festivals();
 		Events events = new Events();
+		HistoricalFigures figures = new HistoricalFigures();
 		//Sites sites = new Sites();
 		
 		// Save entities data to JSON files
-		festivals.saveToJSON();	
-		events.saveToJSON();
+		figures.saveToJSON();
+//		festivals.saveToJSON();	
+//		events.saveToJSON();
 		//sites.saveToJSON();
 }
 }
