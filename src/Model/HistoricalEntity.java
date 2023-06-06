@@ -1,6 +1,6 @@
-package Model;
-import Database.*;
-public class HistoricalEntity {
+package model;
+public abstract class HistoricalEntity {
+	// Inheritance rules 
 	protected int id;
 	protected String name;
 	public int getId() {
@@ -9,5 +9,13 @@ public class HistoricalEntity {
 	public String getName() {
 		return name;
 	}
+	public HistoricalEntity() {
+		
+	}
+	public HistoricalEntity(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	public abstract void save();
 	
 }

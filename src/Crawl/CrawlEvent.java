@@ -1,14 +1,18 @@
-package Crawl;
+package crawl;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import Model.Event;
+
+import model.Event;
 
 public class CrawlEvent {
 	private static ArrayList<String> eventLink = new ArrayList<>();
+	// This method is to crawl all links from URL 
 	public static void crawlAllLink() {
 		String url = "https://nguoikesu.com/tu-lieu/quan-su?filter_tag[0]=";
 		try {
@@ -42,11 +46,11 @@ public class CrawlEvent {
 		try {
             Document doc = Jsoup.connect(url).timeout(120000).get();
 
-            String name = "Chưa rõ"; // Ten su kien
-            String date = "Chưa rõ"; // Thoi gian dien ra su kien
-            String location = "Chưa rõ"; // Dia diem dien ra su kien
-            String cause = "Chưa rõ"; // Nguyen nhan dien ra su kien
-            String result = "Chưa rõ"; // Ket qua cua su kien
+            String name = "Chưa rõ"; 
+            String date = "Chưa rõ"; 
+            String location = "Chưa rõ"; 
+            String cause = "Chưa rõ"; 
+            String result = "Chưa rõ"; 
             ArrayList<String> relatedFigure = new ArrayList<>();
             // Get related figures
             Elements parList = doc.select("p"); // This returns a list of all paragraphs
@@ -69,7 +73,7 @@ public class CrawlEvent {
             // Get event name
             name = doc.select("div.page-header").text().replace("\u2013", "-");
             
-            // Lay ra bang thong tin gom thoi gian dia diem ket qua
+            // Get date, location, cause and result
             Element infoTable = doc.selectFirst("table[cellpadding=0]");
             if(infoTable != null) {
             	Elements infoRow = infoTable.select("tr");
@@ -89,7 +93,9 @@ public class CrawlEvent {
 						result = row.select("td:nth-of-type(2)").text();
 					}					
 				}
-            }         
+            }     
+            // if infoTable == NULL then
+            
             new Event(name,date,location,cause,result,relatedFigure);
             
 		}catch (IOException e) {

@@ -1,51 +1,31 @@
-package Database;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import Model.Festival;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-public class Festivals {
+package database;
+import model.Festival;
+public class Festivals implements DataManipulation{
+	// This is the database for the entity 
 	public static EntityData<Festival> collection = new EntityData<>();
-	private static ObjectMapper mapper = new ObjectMapper();
-	private static String PATH = "D:\\Code\\Java\\Test\\json\\Festival\\";
-	public static void writeJSON(Festival festival) {
-		try {
-			mapper.writeValue(new File(PATH+festival.getId()+".json"), festival);
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+	// This is an object to interact with data
+	private JsonHelper<Festival> json = new JsonHelper<>();
+	// Folder name
+	private String dirName = "\\Festival";
+	// Write every object to json files
+	@Override
+	public void writeJSON(Object object) {
+		String fileName = dirName + "\\" + ((Festival) object).getId() + ".json";
+		json.writeJSON(fileName, object);
 	}
-	public static void queryJSON() {
-		try {
-            @SuppressWarnings("resource")
-			Stream<Path> paths = Files.list(Paths.get("D:\\Code\\Java\\Test\\json\\Festival\\"));
-            ArrayList<Festival> festivals = (ArrayList<Festival>) paths.map(path -> {
-                try {
-                    return mapper.<Festival>readValue(path.toFile(), Festival.class);
-                } catch (IOException e){
-                    e.printStackTrace();
-                    return null;
-                }
-            }).collect(Collectors.toList());
-            collection.setEntityData(festivals);
-            collection.sortById();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+	// Query from json files back to objects 
+	// add it to the database 'collection'
+	@Override
+	public void queryJSON() {
+		collection.setEntityData(json.queryJSON(dirName));
+		collection.sortById();
 	}
-	public static void saveToJSON() {
+	/*
+	 * For every object in the 'collection' database 
+	 * Save it in JSON file
+	 */
+	@Override
+	public void saveToJSON() {
 		for(Festival fes : collection.getEntityData()) {
 			fes.save();
 		}

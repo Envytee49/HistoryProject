@@ -1,16 +1,17 @@
-package Model;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Database.*;
+import database.*;
 public class Festival extends HistoricalEntity {
 	private String date;
 	private String location;
 	private String firstTime;
 	private String note;
 	private Map<String, Integer> relatedFigure = new HashMap<>();
+	private Festivals festivals = new Festivals();
 	public String getDate() {
 		return date;
 	}
@@ -57,11 +58,15 @@ public class Festival extends HistoricalEntity {
 		for(String entity : relatedFigure) {
 			this.relatedFigure.put(entity, null);
 		}
+		// When attributes are set, then the object is add to the database
 		Festivals.collection.add(this);
 		
 	}
+	// Default constructor to apply ObjectMapper
 	public Festival() {}
+	// Save to json 'this' object
+	@Override
 	public void save() {
-		Festivals.writeJSON(this);
+		festivals.writeJSON(this);
 	}
 }
