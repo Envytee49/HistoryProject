@@ -1,20 +1,18 @@
-<<<<<<< HEAD
 package Crawl;
-=======
-package crawl;
+
+
+
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
->>>>>>> b8557c0efdfab1a8dc297d73bd779ae73cee0408
-
 import model.HistoricalFigure;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CrawlHistoricalFigure extends CrawlHelper{
+public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	private static ArrayList<String> figuresLink = new ArrayList<>();
 	//method for get all page
 	public static void crawlAllLink(){

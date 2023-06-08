@@ -16,7 +16,7 @@ public class Relation {
 //		CrawlFestival.crawlData();
 //		CrawlEvent.crawlData();
 //		CrawlSite.crawlData();
-<<<<<<< HEAD
+
 		CrawlEra.crawlData();
 	}
 	public static boolean checkKing(String s) {
@@ -44,7 +44,7 @@ public class Relation {
 	}
 	public static void addCharEraRelation() {
 		// Lay nhan vat
-		ObservableList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getData();
+		ObservableList<model.HistoricalFigure> listOfFigures = database.HistoricalFigures.collection.getData();
 		if (listOfFigures.size() == 0) {
 			CrawlHistoricalFigure.crawlData();
 		}
