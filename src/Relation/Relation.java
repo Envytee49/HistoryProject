@@ -13,9 +13,10 @@ import java.util.regex.Pattern;
 public class Relation {
 	public static void crawlData() {
 		// Crawl all data of entities
-		CrawlFestival.crawlData();
-		CrawlEvent.crawlData();
+//		CrawlFestival.crawlData();
+//		CrawlEvent.crawlData();
 //		CrawlSite.crawlData();
+<<<<<<< HEAD
 		CrawlEra.crawlData();
 	}
 	public static boolean checkKing(String s) {
@@ -185,4 +186,29 @@ public class Relation {
 			e.setListOfKingsId(relatedCharList);
 		}
 	}
+=======
+		CrawlHistoricalFigure.crawlData();
+	}
+	public static void createRelation() {
+		// Step 1
+		// This part create relation by setting the 'value' as 'key'
+		// ... implementation
+		
+		
+		// Step 2
+		// Save entities data to JSON files
+		
+		//Create instances
+		Festivals festivals = new Festivals();
+		Events events = new Events();
+		HistoricalFigures figures = new HistoricalFigures();
+		//Sites sites = new Sites();
+		
+		// Save entities data to JSON files
+		figures.saveToJSON();
+//		festivals.saveToJSON();	
+//		events.saveToJSON();
+		//sites.saveToJSON();
+}
+>>>>>>> b8557c0efdfab1a8dc297d73bd779ae73cee0408
 }
