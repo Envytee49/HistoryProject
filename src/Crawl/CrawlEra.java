@@ -1,5 +1,7 @@
-package main;
-import main.java.Crawl;
+package Crawl;
+
+import Model.Era;
+import Crawl.Crawl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,7 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class crawlEra extends Crawl{
+public class CrawlEra extends Crawl {
+
     public static void CrawlFromWeb(){
         try{
             Document doc = Jsoup.connect("https://vi.wikipedia.org/wiki/Vua_Việt_Nam").timeout(120000).get();
@@ -126,6 +129,9 @@ public class crawlEra extends Crawl{
                                                 }
                                                 eraTime = FirstParenT[0].trim() + "-" + SeconParenT[2];
                                             }
+                                        }
+                                    }
+
                                             else {
 
                                                 Elements tableDatas = currentElement.select("tbody > tr > td:nth-child(2)");
@@ -139,14 +145,14 @@ public class crawlEra extends Crawl{
                                                             kingList.add(kingName);
                                                         }
                                                     }
-                                                    for(int j = 1; j < tableRows.size(); ++j){
+                                                    for(int j = 1; j < tableRows.size(); ++j) {
                                                         Element firstTd = tableRows.get(j).selectFirst("td");
-                                                        if(firstTd != null){
+                                                        if (firstTd != null) {
                                                             String eraValue = firstTd.text();
-                                                            if(!currentEra.equals("")){
-                                                                if(eraValue.contains(currentEra)){
+                                                            if (!currentEra.equals("")) {
+                                                                if (eraValue.contains(currentEra)) {
                                                                     Elements currentRowTds = tableRows.get(j).select("td");
-                                                                    if(currentRowTds != null){
+                                                                    if (currentRowTds != null) {
                                                                         currentRowTds.get(1).select("sup").remove();
                                                                         currentRowTds.get(2).select("sup").remove();
                                                                         currentRowTds.get(3).select("sup").remove();
@@ -156,9 +162,9 @@ public class crawlEra extends Crawl{
                                                                     }
                                                                     break;
                                                                 }
+                                                            }
                                                         }
-
-                                                        }
+                                                    }
                                                         if(link != null){
                                                             System.out.print("\nLink: " + link);
                                                             try {
@@ -185,16 +191,20 @@ public class crawlEra extends Crawl{
 
                                                                             boolean outLoop = true;
                                                                             while (outLoop) {
-                                                                                int start = firstPcontent.indexOf("là");
+                                                                                int start = firstPcontent.indexOf("là"); // tra ve vi tri chu l cua "la" dau tien tim thay
                                                                                 if (start != -1 && start < firstPcontent.length() - 3) {
+                                                                                    // Neu la chu in hoa || hoac la con, lang? ... => bo TH chu la nay di :v
                                                                                     if (
-                                                                                            Character.isUpperCase(firstPcontent.charAt(start + 3)) || firstPcontent.charAt(start + 2) != ' ') {
-                                                                                        if (firstPcontent.charAt(start + 2) == 'm' && firstPcontent.charAt(start + 3)) {
+                                                                                            Character.isUpperCase(firstPcontent.charAt(start + 3)) ||
+                                                                                                    firstPcontent.charAt(start + 2) != ' '
+                                                                                    ) {
+                                                                                        // Con truong hop la mot
+                                                                                        // Truong hop chu lam
+                                                                                        if (firstPcontent.charAt(start + 2) == 'm' && firstPcontent.charAt(start + 3) == ' ') {
                                                                                             outLoop = false;
                                                                                         } else
                                                                                             firstPcontent = firstPcontent.substring(start + 3);
                                                                                     } else outLoop = false;
-                                                                                    else outLoop = false;
                                                                                 } else outLoop = false;
                                                                             }
                                                                             System.out.print("\n" + firstPcontent);
@@ -209,10 +219,11 @@ public class crawlEra extends Crawl{
                                                                             break;
                                                                         }
                                                                     }
-                                                                } catch(IOException err){
-                                                                    err.printStackTrace();
                                                                 }
+                                                            } catch (IOException err) {
+                                                                    err.printStackTrace();}
                                                                 link = null;
+
                                                             }
                                                             System.out.println("Era name: " + currentEra);
                                                             System.out.println("Belongs to timestamp: " + currentTimeStamp);
@@ -226,7 +237,7 @@ public class crawlEra extends Crawl{
                                                                 for(int t = 0; t < kingList.size(); t++){
                                                                     if(t < kingList.size() - 1 ){
                                                                         System.out.print(kingList.get(t) + ", ");
-                                                                    } else System.out.print(kingList.get(t) + "]\n);
+                                                                    } else System.out.print(kingList.get(t) + "]\n");
                                                                 }
                                                             } else {
                                                                 System.out.print("]\n");
@@ -239,8 +250,7 @@ public class crawlEra extends Crawl{
                                                                     location,
                                                                     eraTime,
                                                                     overview,
-                                                                    kingList
-                                                            );
+                                                                    kingList);
 
                                                             // Reset lai overview
                                                             if (!overview.equals("Chưa rõ")) overview = "Chưa rõ";
@@ -260,10 +270,6 @@ public class crawlEra extends Crawl{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-                                }
-                                public static void crawlData() {
-                                    crawlFromWiki();
-                                }
-
-                            }
-                        }
+    }
+    public static void crawlData() {CrawlFromWeb();}
+}

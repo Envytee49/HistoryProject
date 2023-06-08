@@ -1,4 +1,4 @@
-package crawl;
+package Crawl;
 
 import java.io.IOException;
 import java.util.ArrayList;
