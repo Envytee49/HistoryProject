@@ -362,9 +362,4 @@ public class CrawlSite {
 				return i;
 		return -1;
 	}
-	
-	public static void main(String[] args) {
-		crawlData();
-	}
-	
 }
