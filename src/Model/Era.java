@@ -1,11 +1,13 @@
-package Model;
+package model;
 
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Era extends model.HistoricalEntity {
+import database.Eras;
+
+public class Era extends HistoricalEntity {
 
         private String belongsToTimestamp;
         private String homeland;
@@ -13,8 +15,8 @@ public class Era extends model.HistoricalEntity {
         private String locationOfCapital;
         private String time;
         private String overview;
-        private Map<String, Integer> listOfKingsId = new HashMap<>();
-
+        private Map<String, Integer> listOfKings = new HashMap<>();
+        private Eras era = new Eras();
         /* Getters */
         public String getBelongsToTimestamp() {
             return belongsToTimestamp;
@@ -40,8 +42,8 @@ public class Era extends model.HistoricalEntity {
             return overview;
         }
 
-        public Map<String, Integer> getListOfKingsId() {
-            return listOfKingsId;
+        public Map<String, Integer> getListOfKings() {
+            return listOfKings;
         }
 
         /* Setters */
@@ -65,8 +67,8 @@ public class Era extends model.HistoricalEntity {
             this.time = time;
         }
 
-        public void setListOfKingsId(Map<String, Integer> newListOfKings) {
-            this.listOfKingsId = newListOfKings;
+        public void setListOfKings(String name, Integer id) {
+            this.listOfKings.put(name, id);
         }
 
         public void setOverview(String overview) {
@@ -74,17 +76,7 @@ public class Era extends model.HistoricalEntity {
         }
 
         /* Constructors */
-        public Era() {
-            super();
-            this.id = Eras.collection.getSequenceId();
-            Eras.collection.add(this);
-        }
 
-        public Era(String name){
-            super(name);
-            this.id = Eras.collection.getSequenceId();
-            Eras.collection.add(this);
-        }
 
         public Era(
                 String name,
@@ -94,10 +86,10 @@ public class Era extends model.HistoricalEntity {
                 String locationOfCapital,
                 String time,
                 String overview,
-                Collection<String> listOfKings
+                ArrayList<String> listOfKings
         ) {
-            super(name);
-            this.id = Eras.collection.getSequenceId();
+            this.name = name;
+            this.id = Eras.collection.getId();
             this.belongsToTimestamp = timestamp;
             this.homeland = hometown;
             this.founder = founder;
@@ -105,18 +97,13 @@ public class Era extends model.HistoricalEntity {
             this.time = time;
             this.overview = overview;
             for (String king : listOfKings){
-                listOfKingsId.put(king, null);
+                this.listOfKings.put(king, null);
             }
             Eras.collection.add(this);
         }
-
-        /**
-         * Dùng để lưu đối tượng vào file JSON.
-         * fileName = /[Tên class]/[id đối tượng].json
-         * extensions: json
-         */
+        public Era() {}
         public void save(){
-            Eras.writeJSON(this);
+            era.writeJSON(this);
         }
 
     }

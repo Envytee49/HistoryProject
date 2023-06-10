@@ -40,8 +40,8 @@ public class Festival extends HistoricalEntity {
 	public Map<String, Integer> getRelatedFigure() {
 		return relatedFigure;
 	}
-	public void setRelatedFigure(Map<String, Integer> relatedFigure) {
-		this.relatedFigure = relatedFigure;
+	public void setRelatedFigure(String name, Integer id) {
+		this.relatedFigure.put(name, id);
 	}
 	public Festival(String name,
 					String date, 

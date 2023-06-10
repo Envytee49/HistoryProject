@@ -22,7 +22,8 @@ public class EntityData <T extends HistoricalEntity> {
 		this.entityData = entityData;
 	}
 	public void add(T entity) {
-		entityData.add(entity);
+//		if(!entityData.contains(entity))
+			entityData.add(entity);
 	}
 	public void sortByName() { // Sort object by their name
 		Collections.sort(entityData, (o1, o2) -> o1.getName().compareTo(o2.getName())); 

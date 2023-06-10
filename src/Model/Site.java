@@ -13,7 +13,6 @@ public class Site extends HistoricalEntity{
 	private String category;
 	private String approved;
 	private Map<String, Integer> relatedFigure = new HashMap<>();
-	private Map<String, Integer> relatedFestival = new HashMap<>();
 	private Sites sites = new Sites();
 	
 	public Site() {
@@ -22,7 +21,8 @@ public class Site extends HistoricalEntity{
 	
 	public Site(String name, String location, String constructionDate, 
 			String note, String category, String approved, 
-			ArrayList<String> relatedFigure, ArrayList<String> relatedFestival){
+			ArrayList<String> relatedFigure){
+		this.id = Sites.collection.getId();
 		this.name = name;
 		this.location = location;
 		this.constructionDate = constructionDate;
@@ -32,9 +32,7 @@ public class Site extends HistoricalEntity{
 		for(String entity : relatedFigure) {
 			this.relatedFigure.put(entity, null);
 		}
-		for(String entity : relatedFestival) {
-			this.relatedFestival.put(entity, null);
-		}
+
 		// When attributes are set, then the object is add to the database
 		Sites.collection.add(this); 
 	}
@@ -83,17 +81,10 @@ public class Site extends HistoricalEntity{
 		return relatedFigure;
 	}
 
-	public void setRelatedFigure(Map<String, Integer> relatedFigure) {
-		this.relatedFigure = relatedFigure;
+	public void setRelatedFigure(String name, Integer id) {
+		this.relatedFigure.put(name, id);
 	}
 
-	public Map<String, Integer> getRelatedFestival() {
-		return relatedFestival;
-	}
-
-	public void setRelatedFestival(Map<String, Integer> relatedFestival) {
-		this.relatedFestival = relatedFestival;
-	}
 	@Override
 	public void save() {
 		sites.writeJSON(this);

@@ -12,7 +12,7 @@ public class HistoricalFigures implements DataManipulation {
 	// Query from json files back to objects 
 	// add it to the database 'collection'
 	public void queryJSON() {
-        collection.setEntityData(json.queryJSON(dirName));
+        collection.setEntityData(json.queryJSON(dirName,HistoricalFigure.class));
         collection.sortById();
 	}
 	/*

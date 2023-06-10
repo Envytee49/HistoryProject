@@ -17,7 +17,7 @@ public class Events implements DataManipulation{
 	// add it to the database 'collection'
 	@Override
 	public void queryJSON() {
-		collection.setEntityData(json.queryJSON(dirName));
+		collection.setEntityData(json.queryJSON(dirName,Event.class));
 		collection.sortById();
 	}
 	/*

@@ -18,7 +18,7 @@ public class Sites implements DataManipulation{
 	// add it to the database 'collection'
 	@Override
 	public void queryJSON() {		
-        collection.setEntityData(json.queryJSON(dirName));
+        collection.setEntityData(json.queryJSON(dirName,Site.class));
         collection.sortById();
 	}
 	/*
@@ -27,7 +27,7 @@ public class Sites implements DataManipulation{
 	 */
 	@Override
 	public void saveToJSON() {
-		for(Site site: collection.getEntityData()) {
+		for(Site site : collection.getEntityData()) {
 			site.save();
 		}
 	}

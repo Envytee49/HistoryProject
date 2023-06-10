@@ -18,6 +18,7 @@ public class HistoricalFigure extends HistoricalEntity{
     private HistoricalFigures figure = new HistoricalFigures();
     
     //Constructors
+    public HistoricalFigure(){}
     public HistoricalFigure(
             String name,
             String birth,

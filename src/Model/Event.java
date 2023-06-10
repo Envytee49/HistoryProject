@@ -27,8 +27,8 @@ public class Event extends HistoricalEntity {
 	public Map<String, Integer> getRelatedFigure() {
 		return relatedFigure;
 	}
-	public void setRelatedFigure(Map<String, Integer> relatedFigure) {
-		this.relatedFigure = relatedFigure;
+	public void setRelatedFigure(String name, Integer id) {
+		this.relatedFigure.put(name, id);
 	}
 	public Event(String name,
 					String date, 

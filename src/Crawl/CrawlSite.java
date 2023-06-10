@@ -1,17 +1,15 @@
-package Crawl;
+package crawl;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import Model.Site;
+import model.Site;
 
 
 public class CrawlSite {
@@ -40,7 +38,6 @@ public class CrawlSite {
 				if(r_rows.size() == 5) {
 				
 					ArrayList<String> relatedFigure = new ArrayList<String>();
-					ArrayList<String> relatedFestival = new ArrayList<String>();
 					
 					String name = r.select("td:nth-of-type(1)").text();
 					String location = r.select("td:nth-of-type(2)").text();
@@ -97,16 +94,7 @@ public class CrawlSite {
 								}
 							}
 						}
-						
-						// get Related Festival
-						Element festivalHeading = related_div.selectFirst("h2:contains(Lễ hội)");
-						if(festivalHeading != null) {
-							Element festivalPara = festivalHeading.nextElementSibling();
-							festivalPara.select("sup").remove();
-							String tempFest = festivalPara.text();
-							if(!relatedFestival.contains(tempFest))
-								relatedFestival.add(tempFest);
-						}
+					
 						
 						// get Related Figures
 						for(Element e : related_div.children()) {
@@ -141,7 +129,6 @@ public class CrawlSite {
 					
 					if(note.equals(""))
 						note = "N/A";
-					
 					System.out.println("\nName: " +name);
 					System.out.println("Location: "+location);
 					System.out.println("Construction Date: "+constructionDate);
@@ -150,14 +137,11 @@ public class CrawlSite {
 					System.out.println("Approved: "+approved);
 					System.out.println("Related Figure");
 					System.out.println(relatedFigure);
-					System.out.println("Related Festival");
-					System.out.println(relatedFestival);
 					
-					new Site(name, location, constructionDate, note, category, approved, relatedFigure, relatedFestival);
+					new Site(name, location, constructionDate, note, category, approved, relatedFigure);
 				}
 				else if(r_rows.size() == 4) {
 					ArrayList<String> relatedFigure = new ArrayList<String>();
-					ArrayList<String> relatedFestival = new ArrayList<String>();
 					
 					String name = r.select("td:nth-of-type(2)").text();
 					String location = r.select("td:nth-of-type(3)").text();
@@ -171,12 +155,9 @@ public class CrawlSite {
 					constructionDate = setConstructionDateForNinhBinh(note);
 					
 					relatedFigure = characterName(note);
+
 					
-					if(note.contains("lễ") || note.contains("hội")) {
-						relatedFestival.add("Hội " + name);
-					}
-					
-					new Site(name, location, constructionDate, note, category, approved, relatedFigure, relatedFestival);
+					new Site(name, location, constructionDate, note, category, approved, relatedFigure);
 				}
 				
 			}
@@ -361,10 +342,5 @@ public class CrawlSite {
 			if(text[i].contains(verifiedText.split(" ")[0]))
 				return i;
 		return -1;
-	}
-	
-	public static void main(String[] args) {
-		crawlData();
-	}
-	
+	}	
 }

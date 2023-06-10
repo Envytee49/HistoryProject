@@ -17,7 +17,7 @@ public class Festivals implements DataManipulation{
 	// add it to the database 'collection'
 	@Override
 	public void queryJSON() {
-		collection.setEntityData(json.queryJSON(dirName));
+		collection.setEntityData(json.queryJSON(dirName, Festival.class));
 		collection.sortById();
 	}
 	/*

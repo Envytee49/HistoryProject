@@ -1,27 +1,22 @@
-package Crawl;
-
-
-
+package crawl;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import model.HistoricalFigure;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 public class CrawlHistoricalFigure extends crawl.CrawlHelper {
-	private static ArrayList<String> figuresLink = new ArrayList<>();
+	private static ArrayList<String> figuresLink1 = new ArrayList<>();
 	//method for get all page
-	public static void crawlAllLink(){
+	public static void crawlAllLinkFromLink1(){
 		
-		String url = "https://nguoikesu.com/nhan-vat";
+		String url1 = "https://nguoikesu.com/nhan-vat";
 		
 		try {
 			//get link
-			Document docs = Jsoup.connect(url).get();
+			Document docs = Jsoup.connect(url1).get();
 			//get number of pages
 			String page = docs.select("div.com-content-category-blog.blog > div.com-content-category-blog__navigation.w-100 > p").text();
 			String[] splitPage = page.split(" ");
@@ -33,7 +28,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 			for (Element e : pageAddress.select("div div h2 a")) {
 				String res = e.attr("href");
 				//System.out.println("https://nguoikesu.com" + res);
-				figuresLink.add("https://nguoikesu.com"+res);
+				figuresLink1.add("https://nguoikesu.com"+res);
 				index++;
 			}
 			
@@ -48,7 +43,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 				for (Element e : pageAddress2.select("div div h2 a")) {
 					String res = e.attr("href");
 					//add to ArrayList
-					figuresLink.add("https://nguoikesu.com"+res);
+					figuresLink1.add("https://nguoikesu.com"+res);
 					index++;
 				}	
 			}
@@ -59,6 +54,80 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 		}
 		
 		
+	}
+	public static void crawlAllLinkFromLink2() {
+		String wikiUrl = "https://vi.wikipedia.org/";
+		try {
+			ArrayList<String> eraList = new ArrayList<String>();
+			Document doc = Jsoup.connect("https://vi.wikipedia.org/wiki/Vua_Vi%E1%BB%87t_Nam").get();
+			Elements eraNames = doc.select("h3 .mw-headline"); 	 // select all era name
+			Elements kingTables = doc.select("table[cellpadding=0][style*='font-size:90%']"); // select all tables with kings
+			
+			// Add all era to eraList
+			for(Element eraName : eraNames) {
+				if(eraName.text().contains("("))
+					eraList.add(eraName.text().substring(0,eraName.text().indexOf('(') - 1));
+				
+				else 
+					eraList.add(eraName.text());
+			}
+			
+				for(int i = 0; i < kingTables.size(); i++) {
+					Elements r = kingTables.get(i).select("tr");
+					for(int j = 1; j < r.size(); j++) {
+						String born = "Chưa rõ";
+						String died = "Chưa rõ";
+						String workTime = "Chưa rõ";
+						String father = "Chưa rõ";
+						String mother = "Chưa rõ";
+						String succeededBy = "Chưa rõ";
+						String preceededBy = "Chưa rõ";
+						String name = "Chưa rõ";
+						String era = "Chưa rõ";
+						// Get name of king
+						r.get(j).select("td:nth-of-type(2)").select("sup").remove();
+						name = r.get(j).select("td:nth-of-type(2)").text();
+						
+						// Get king href
+						String kingURL = wikiUrl + r.get(j).select("td:nth-of-type(2)").select("a").attr("href");
+						
+						Document kingDoc = Jsoup.connect(kingURL).get();
+						Element kingTableContent = kingDoc.selectFirst("table[class=infobox]");
+						if(kingTableContent != null) {
+						Elements rowData = kingTableContent.select("tr");				
+						for(Element rowContent : rowData) {
+							if(rowContent.select("th") != null) {
+								String thContent = rowContent.select("th").text();
+								rowContent.select("td").select("sup").remove();	
+								String tdContent = rowContent.select("td").text();
+								if(thContent.equals("Trị vì")) workTime = tdContent;
+								else if(thContent.equals("Tiền nhiệm")) preceededBy = tdContent;
+								else if(thContent.equals("Kế nhiệm")) succeededBy = tdContent;
+								else if(thContent.equals("Sinh")) born =  tdContent;
+								else if(thContent.equals("Mất")) died = tdContent;
+								else if(thContent.equals("Thân phụ"))father = tdContent;
+								else if(thContent.equals("Thân mẫu")) mother = tdContent;
+								}
+							}
+						}
+						era = eraList.get(i);
+						System.out.println("Ten: " + name);
+						System.out.println("Sinh: " + born);
+						System.out.println("Mất: " + died);
+						System.out.println("Tại vị: " + workTime);
+						System.out.println("Thân phụ: " + father);
+						System.out.println("Thân mẫu: " + mother);
+						System.out.println("Kế nhiệm: " + succeededBy);
+						System.out.println("Tiền nhiệm: " + preceededBy);
+						System.out.println("Kỷ nguyên: " + era);
+						new HistoricalFigure(name, born, died, workTime, era, father, mother, succeededBy, preceededBy);
+					}
+				}
+				
+			
+		}catch(Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	public static void crawlFigures(String url) {
 		String born = "Chưa rõ";
@@ -267,16 +336,19 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 		}
 	}
 
-	public static void crawlDataFromLink() {
-		for (String url : figuresLink) {	
+	public static void crawlDataFromLink1() {
+		for (String url : figuresLink1) {	
 			crawlFigures(url);
 		}
 	}
-	
 	public static void crawlData(){
 		//get link
-		crawlAllLink();
-		crawlDataFromLink();
+		crawlAllLinkFromLink1();
+		crawlDataFromLink1();
+		crawlAllLinkFromLink2();
+	}
+	public static void main(String[] args) {
+		crawlData();
 	}
 
 }
