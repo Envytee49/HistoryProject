@@ -10,21 +10,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.FesDetailController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@../stylesheet/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.FesDetailController">
    <left>
       <fx:include fx:id="sideBar" source="SideBar.fxml" />
    </left>
    <center>
-      <VBox styleClass="background" stylesheets="@../stylesheet/stylesheet.css" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_RIGHT">
+            <HBox alignment="CENTER_LEFT">
                <children>
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onClickReturn" text="Return" />
+                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#onClickReturn" text="Quay lại" />
                </children>
             </HBox>
             <HBox>
                <children>
-                  <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of fes" textAlignment="CENTER" wrappingWidth="600.0">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name of fes" textAlignment="CENTER" wrappingWidth="600.0">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
@@ -33,66 +33,78 @@
             </HBox>
             <VBox spacing="5.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox>
+                  <HBox spacing="30.0">
                      <padding>
                         <Insets bottom="10.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label prefWidth="150.0" text="Thời gian">
+                        <Label prefWidth="200.0" text="Thời gian">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="dateText" strokeType="OUTSIDE" strokeWidth="0.0" text="dateText" />
+                        <Text fx:id="dateText" strokeType="OUTSIDE" strokeWidth="0.0" text="dateText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox spacing="30.0">
                      <padding>
                         <Insets bottom="10.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label prefWidth="150.0" text="Địa điểm">
+                        <Label prefWidth="200.0" text="Địa điểm">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="locationText" strokeType="OUTSIDE" strokeWidth="0.0" text="locationText" />
+                        <Text fx:id="locationText" strokeType="OUTSIDE" strokeWidth="0.0" text="locationText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox spacing="30.0">
                      <padding>
                         <Insets bottom="10.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label prefWidth="150.0" text="Lần đầu tổ chức">
+                        <Label prefWidth="200.0" text="Lần đầu tổ chức">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="firstTimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="firstTimeText" />
+                        <Text fx:id="firstTimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="firstTimeText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox spacing="30.0">
                      <padding>
                         <Insets bottom="10.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label prefWidth="150.0" text="Ghi chú">
+                        <Label prefWidth="200.0" text="Ghi chú">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="noteText" strokeType="OUTSIDE" strokeWidth="0.0" text="noteText" />
+                        <Text fx:id="noteText" strokeType="OUTSIDE" strokeWidth="0.0" text="noteText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox spacing="30.0">
                      <padding>
                         <Insets bottom="10.0" top="20.0" />
                      </padding>
                      <children>
-                        <Label prefWidth="150.0" text="Nhân vật liên quan">
+                        <Label prefWidth="200.0" text="Nhân vật liên quan">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
                         <FlowPane fx:id="relatedCharsFlowPane" />

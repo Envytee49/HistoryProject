@@ -1,24 +1,39 @@
 .background {
-    -fx-background-image: url("../image/grunge-certificate-with-vintage-ornamental-frame.jpg");
-    -fx-background-color: transparent;
-    -fx-background-size: cover;
-}
-
-.search-box {
-    -fx-background-radius: 100;
-}
-
-.side-bar {
     -fx-background-image: url("../image/vintage-grunge-paper-background.jpg");
     -fx-background-color: transparent;
     -fx-background-size: cover;
 }
 
+.side-bar {
+    -fx-background-color: transparent;
+    -fx-background-size: cover;
+}
+
+.river-bar {
+    -fx-background-image: url("../image/Golden-Line-Background-PNG.png");
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: transparent;
+    -fx-border-color: #FFFFFF;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #FFFFFF;
+}
+
 .button {
     -fx-transition: all .5s ease;
-    -fx-color: #001F3F;
-    -fx-border: 3px solid white;
+    -fx-text-color: #000000;
+    -fx-border-color: #000000;
     -fx-font-family:'Montserrat', sans-serif;
+    -fx-font-weight: bold;
     -fx-text-transform: uppercase;
     -fx-text-align: center;
     -fx-line-height: 1;
@@ -27,4 +42,23 @@
     -fx-padding: 10px;
     -fx-outline: none;
     -fx-border-radius: 4px;
+}
+
+.button:hover {
+    -fx-transition: all .5s ease;
+    -fx-text-color: #000000;
+    -fx-border-color: #FFFFFF;
+    -fx-font-family:'Montserrat', sans-serif;
+    -fx-text-transform: uppercase;
+    -fx-text-align: center;
+    -fx-line-height: 1;
+    -fx-font-size: 17px;
+    -fx-background-color : #FFFFFF;
+    -fx-padding: 10px;
+    -fx-outline: none;
+    -fx-border-radius: 4px;
+}
+
+.image-view {
+
 }

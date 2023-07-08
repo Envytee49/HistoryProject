@@ -10,16 +10,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.EraDetailController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@../stylesheet/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.EraDetailController">
    <left>
       <fx:include fx:id="sideBar" source="SideBar.fxml" />
    </left>
    <center>
-      <VBox styleClass="background" stylesheets="@../stylesheet/stylesheet.css" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="TOP_RIGHT">
+            <HBox>
                <children>
-                  <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../stylesheet/stylesheet.css" text="Return" />
+                  <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../stylesheet/stylesheet.css" text="Quay lại" />
                </children>
             </HBox>
             <HBox alignment="CENTER">
@@ -31,16 +31,19 @@
                   </Text>
                </children>
             </HBox>
-            <VBox spacing="10.0">
+            <VBox spacing="20.0">
                <children>
                   <HBox>
                      <children>
                         <Label prefWidth="150.0" text="Mô tả">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="overviewText" strokeType="OUTSIDE" strokeWidth="0.0" text="overviewText" />
+                        <Text fx:id="overviewText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="overviewText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -56,10 +59,13 @@
                      <children>
                         <Label prefWidth="150.0" text="Thời kỳ">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="timeStampText" strokeType="OUTSIDE" strokeWidth="0.0" text="timeStampText" />
+                        <Text fx:id="timeStampText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="timeStampText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
                   <HBox>
@@ -69,10 +75,13 @@
                      <children>
                         <Label prefWidth="150.0" text="Quê quán">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="homelandText" strokeType="OUTSIDE" strokeWidth="0.0" text="homelandText" />
+                        <Text fx:id="homelandText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="homelandText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
                   <HBox>
@@ -82,10 +91,13 @@
                      <children>
                         <Label prefWidth="150.0" text="Người sáng lập">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="founderText" strokeType="OUTSIDE" strokeWidth="0.0" text="founderText" />
+                        <Text fx:id="founderText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="founderText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
                   <HBox>
@@ -95,10 +107,13 @@
                      <children>
                         <Label prefWidth="150.0" text="Kinh đô">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="capitalText" strokeType="OUTSIDE" strokeWidth="0.0" text="capitalText" />
+                        <Text fx:id="capitalText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="capitalText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
                   <HBox>
@@ -108,10 +123,13 @@
                      <children>
                         <Label prefWidth="150.0" text="Thời gian">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
-                        <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="timeText" />
+                        <Text fx:id="timeText" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="timeText">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
                      </children>
                   </HBox>
                   <HBox>
@@ -121,7 +139,7 @@
                      <children>
                         <Label prefWidth="150.0" text="Các vị vua">
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="System Bold Italic" size="18.0" />
                            </font>
                         </Label>
                         <FlowPane fx:id="kingsFlowPane" hgap="15.0" vgap="5.0" HBox.hgrow="ALWAYS" />
