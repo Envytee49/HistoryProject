@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@../stylesheet/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.FigureScreenController">
+    <left>
+        <fx:include fx:id="sideBar" source="SideBar.fxml" />
+    </left>
+    <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Nhân vật lịch sử">
+               <font>
+                  <Font name="System Bold" size="48.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+             <fx:include fx:id="searchBar" source="SearchBar.fxml" />
+            <HBox prefHeight="329.0" prefWidth="425.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="figTable" prefHeight="329.0" prefWidth="426.0" HBox.hgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="colFigId" prefWidth="54.0" text="ID" />
+                      <TableColumn fx:id="colFigName" prefWidth="131.0" text="Tên" />
+                        <TableColumn fx:id="colFigEra" prefWidth="126.0" text="Triều đại" />
+                        <TableColumn fx:id="colFigOverview" prefWidth="114.0" text="Tổng quan" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
