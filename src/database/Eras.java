@@ -1,24 +1,21 @@
 package database;
-import java.util.Map;
 
 import model.Era;
-public class Eras implements DataManipulation {
+public class Eras {
     // This is the database for the entity - aggregation
-    public static EntityData<Era> collection = new EntityData();
+	public static EntityData<Era> collection = new EntityData();
     // This is an object to interact with data
-    private JsonHelper<Era> json = new JsonHelper<>();
+    private static JsonHelper<Era> json = new JsonHelper<>();
     // Folder name
-    public final static String DIR_NAME = "/Era";
+    private static String DIR_NAME = "/Era";
     // Write every object to json files
-    @Override
-        public void writeJSON(Object object){
+        public static void writeJSON(Object object){
             String fileName = DIR_NAME + "/" + ((Era) object).getId() + ".json";
             json.writeJSON(fileName, object);
         }
 	// Query from json files back to objects 
 	// add it to the database 'collection'
-    @Override
-    public void queryJSON() {
+    public static void queryJSON() {
             collection.setEntityData(json.queryJSON(DIR_NAME,Era.class));
             collection.sortById();
     }
@@ -26,8 +23,7 @@ public class Eras implements DataManipulation {
 	 * For every object in the 'collection' database 
 	 * Save it in JSON file
 	 */
-    @Override
-    public void saveToJSON() {
+    public static void saveToJSON() {
         for(Era era : collection.getEntityData()) {
             era.save();
         }

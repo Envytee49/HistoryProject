@@ -14,11 +14,11 @@ public class Relation {
 	static HistoricalFigures figures = new HistoricalFigures();
 	public static void crawlData() {
 		// Crawl all data of entities
-		CrawlFestival.crawlData();
+//		CrawlFestival.crawlData();
 		CrawlEvent.crawlData();
-		CrawlSite.crawlData();
-		CrawlEra.crawlData();
-		CrawlHistoricalFigure.crawlData();
+//		CrawlSite.crawlData();
+//		CrawlEra.crawlData();
+//		CrawlHistoricalFigure.crawlData();
 	}
 	public static void linkCharFes() {
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
@@ -64,17 +64,22 @@ public class Relation {
         }
 	}
 	public static void linkCharEvent() {
+		HistoricalFigures.queryJSON();
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
-        ArrayList<Event> listOfEvents = Events.collection.getEntityData();    
+        Events.queryJSON();
+        ArrayList<Event> listOfEvents = Events.collection.getEntityData();   
+        System.out.println(listOfEvents);
         for (Event event : listOfEvents) {
-            for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {
+            for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {   	
                 if (entry.getKey().equals("")) continue;
                 for (HistoricalFigure c : listOfFigures) {
                     if (c.getName().equalsIgnoreCase(entry.getKey())) {
+                    	System.out.println("in loop id is:"+ c.getId());
                         event.setRelatedFigure(entry.getKey(), c.getId());
                         break;
                     }
-                }    
+                }
+                System.out.println("hello");
             }
         } 
 	}
@@ -156,20 +161,13 @@ public class Relation {
 		// Step 2
 		// Save entities data to JSON files
 		
-		//Create instances
-		Festivals festivals = new Festivals();
-		Events events = new Events();
-		HistoricalFigures figures = new HistoricalFigures();
-		Sites sites = new Sites();
-		Eras eras = new Eras();
-		
 		// Save entities data to JSON files
 		
-		eras.saveToJSON();
-		figures.saveToJSON();
-		festivals.saveToJSON();	
-		events.saveToJSON();
-		sites.saveToJSON();
+		Eras.saveToJSON();
+		HistoricalFigures.saveToJSON();
+		Festivals.saveToJSON();	
+		Events.saveToJSON();
+		Sites.saveToJSON();
 }
 }
 
