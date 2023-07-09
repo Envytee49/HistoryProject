@@ -5,6 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import database.Events;
 import model.Event;
 
 public class CrawlEvent {
@@ -92,7 +93,7 @@ public class CrawlEvent {
 				}
             }     
             // if infoTable == NULL then
-            
+            System.out.println(name+" "+relatedFigure);
             new Event(name,date,location,cause,result,relatedFigure);
             
 		}catch (IOException e) {
@@ -178,7 +179,24 @@ public class CrawlEvent {
 		}
 		return null;
 	}
-
+	public static String getCommonSubstring(String string1, String string2, int check) {
+	    int length1 = string1.length();
+	    int length2 = string2.length();
+	    String longestSubstring = "";
+	    for (int i = 0; i < length1; i++) {
+	        for (int j = i + 1; j <= length1; j++) {
+	            String substring = string1.substring(i, j);
+	            if (string2.contains(substring) && substring.length() > longestSubstring.length()) {
+	                longestSubstring = substring;
+	            }
+	        }
+	    }
+	    if (check == 1) {
+	        return longestSubstring.length() < 14 ? "Not a match" : longestSubstring;
+	    } else {
+	        return longestSubstring.length() < 3 ? "Not a match" : longestSubstring;
+	    }
+	}
 	public static void getDataFromHTML() {
 		String url = "https://vi.wikipedia.org/wiki/Ni%C3%AAn_bi%E1%BB%83u_l%E1%BB%8Bch_s%E1%BB%AD_Vi%E1%BB%87t_Nam";
 		Document doc = null;
@@ -193,6 +211,7 @@ public class CrawlEvent {
 //		 Data1
 		for (Element i : data1) {
 			ArrayList<String> historicalFigures = new ArrayList<>();
+			ArrayList<String> relatedFigures = new ArrayList<>();
 			String date;
 			String nameEvent;
 			if (i.html().contains("</a>")) {
@@ -203,7 +222,7 @@ public class CrawlEvent {
 
 				historicalFigures = getHistoricalFiguresFromNKS(historicalFigures, nameEvent);
 				
-				ArrayList<String> relatedFigures = new ArrayList<>();
+				
 				for(String figure : historicalFigures) {
 					if(!figure.contains("- Lịch sử Việt Nam")&& !figure.contains("nhà")) 
 						relatedFigures.add(figure);
@@ -211,8 +230,18 @@ public class CrawlEvent {
 						relatedFigures.add(figure.substring(0,figure.indexOf("-")).trim()); 
 				}
 				System.out.println(relatedFigures);
-				new Event(nameEvent, date, "Chưa rõ", "Chưa rõ", "Chưa rõ", relatedFigures);
+				boolean check = false;
+				for(Event event : Events.collection.getEntityData()) {
+					if(nameEvent.contains(getCommonSubstring(nameEvent,event.getName(), 1)) 
+							&& date.contains(getCommonSubstring(date, event.getDate(), 0))) {
+						 check = true;
+						 break;
+					}
+				}
+				if(!check)
+					new Event(nameEvent, date, "Chưa rõ", "Chưa rõ", "Chưa rõ", relatedFigures);
 			}
+			
 			
 		}
 		// Data2
@@ -240,7 +269,16 @@ public class CrawlEvent {
 				else if(figure.contains("- Lịch sử Việt Nam") && !figure.contains("nhà")) 
 					relatedFigures.add(figure.substring(0,figure.indexOf("-")).trim()); 
 			}
-			new Event(nameEvent, date, "Chưa rõ", "Chưa rõ", "Chưa rõ", relatedFigures);
+			boolean check = false;
+			for(Event event : Events.collection.getEntityData()) {
+				if(nameEvent.contains(getCommonSubstring(nameEvent,event.getName(), 1)) 
+						&& date.contains(getCommonSubstring(date, event.getDate(), 0))) {
+					 check = true;
+					 break;
+				}
+			}
+			if(!check)
+				new Event(nameEvent, date, "Chưa rõ", "Chưa rõ", "Chưa rõ", relatedFigures);
 		}
 	}
 	public static void crawlData() {
