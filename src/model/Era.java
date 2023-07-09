@@ -1,6 +1,4 @@
-	package model;
-
-
+package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +12,7 @@ public class Era extends HistoricalEntity {
 	private String locationOfCapital;
 	private String time;
 	private String overview;
-	private Map<String, Integer> listOfKings = new HashMap<>();
+	private Map<String, Integer> listOfKings;
 	/* Getters */
 	public String getBelongsToTimestamp() {
 	    return belongsToTimestamp;
@@ -59,6 +57,7 @@ public class Era extends HistoricalEntity {
 	        String overview,
 	        ArrayList<String> listOfKings
 	) {
+		this.listOfKings =  new HashMap<>();
 	    this.setName(name); 
 	    this.setId(Eras.collection.getId());
 	    this.belongsToTimestamp = timestamp;

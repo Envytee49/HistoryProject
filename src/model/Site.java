@@ -13,7 +13,6 @@ public class Site extends HistoricalEntity{
 	private String category;
 	private String approved;
 	private Map<String, Integer> relatedFigure = new HashMap<>();
-
 	public String getLocation() {
 		return location;
 	}

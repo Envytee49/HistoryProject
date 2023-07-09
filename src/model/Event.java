@@ -10,7 +10,7 @@ public class Event extends HistoricalEntity {
 	private String location;
 	private String cause;
 	private String result;
-	private Map<String, Integer> relatedFigure = new HashMap<>();
+	private Map<String, Integer> relatedFigure;
 	public String getDate() {
 		return date;
 	}
@@ -37,6 +37,7 @@ public class Event extends HistoricalEntity {
 					String cause,
 					String result,  
 					ArrayList<String> relatedFigure) {
+		this.relatedFigure = new HashMap<>();
 		this.setName(name);
 		this.date = date;
 		this.location = location;

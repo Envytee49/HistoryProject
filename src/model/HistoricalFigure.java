@@ -8,11 +8,11 @@ public class HistoricalFigure extends HistoricalEntity{
     private String born;
     private String died;
     private String workTime;   
-    private HashMap<String, Integer> era = new HashMap<>();
-    private HashMap<String, Integer> father = new HashMap<>();
-    private HashMap<String, Integer> mother = new HashMap<>();
-    private HashMap<String, Integer> precededBy = new HashMap<>();
-    private HashMap<String, Integer> succeededBy = new HashMap<>();
+    private HashMap<String, Integer> era;
+    private HashMap<String, Integer> father;
+    private HashMap<String, Integer> mother;
+    private HashMap<String, Integer> precededBy;
+    private HashMap<String, Integer> succeededBy;
 
     public String getBorn() {
         return born;
@@ -81,6 +81,11 @@ public class HistoricalFigure extends HistoricalEntity{
             
             
     ) {  
+    	this.era = new HashMap<>();
+    	this.father = new HashMap<>();
+    	this.mother = new HashMap<>();
+    	this.precededBy = new HashMap<>();
+    	this.succeededBy = new HashMap<>();
         this.setName(name);
         this.born = birth;
         this.died = died;

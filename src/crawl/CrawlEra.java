@@ -12,11 +12,7 @@ import java.util.regex.Pattern;
 
 public class CrawlEra{
 
-	public CrawlEra() {
-		crawlData();
-	}
-
-	public static void crawlFromWiki() {
+	public static void crawlData() {
 		try {
 			Document doc = Jsoup.connect("https://vi.wikipedia.org/wiki/Vua_Việt_Nam").timeout(120000).get();
 
@@ -279,9 +275,6 @@ public class CrawlEra{
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
-	public static void crawlData() {
-		crawlFromWiki();
 	}
 
 }

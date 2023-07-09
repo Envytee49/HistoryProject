@@ -60,50 +60,61 @@ public class FigureDetailController {
     public void onClickReturn(ActionEvent event){
         sideBarController.switchToFig(event);
     }
-
+    public static Integer getEntryValue(Set<Entry<String, Integer>> entrySet) {
+        Entry<String, Integer> entry = entrySet.iterator().next();
+        return entry.getValue();
+    }
+    public static String getEntryKey(Set<Entry<String, Integer>> entrySet) {
+        Entry<String, Integer> entry = entrySet.iterator().next();
+        return entry.getKey();
+    }
     public void setFigure(HistoricalFigure figure) {
     	try {
     		this.figure = figure;
             
-            Set<Entry<String, Integer>> father = this.figure.getFather().entrySet();
-        	Entry<String, Integer> fatherName = father.iterator().next();
-        	Integer fid = fatherName.getValue();
+//            Set<Entry<String, Integer>> father = this.figure.getFather().entrySet();
+//        	Entry<String, Integer> fatherName = father.iterator().next();
+//        	Integer fid = fatherName.getValue();
+//        	
+//        	Set<Entry<String, Integer>> era = this.figure.getEra().entrySet();
+//        	Entry<String, Integer> eraName = era.iterator().next();
+//        	Integer eid = eraName.getValue();
+//        	
+//        	Set<Entry<String, Integer>> mother = this.figure.getMother().entrySet();
+//        	Entry<String, Integer> motherName = mother.iterator().next();
+//        	Integer mid = motherName.getValue();
+//        	
+//        	Set<Entry<String, Integer>> preceded = this.figure.getPrecededBy().entrySet();
+//        	Entry<String, Integer> precededName = preceded.iterator().next();
+//        	Integer pid = precededName.getValue();
+//        	
+//        	Set<Entry<String, Integer>> succeeded = this.figure.getSucceededBy().entrySet();
+//        	Entry<String, Integer> succeededName = succeeded.iterator().next();
+//        	Integer sid = succeededName.getValue();
+        	Integer fid = getEntryValue(this.figure.getFather().entrySet());
+        	Integer eid = getEntryValue(this.figure.getEra().entrySet());
+        	Integer mid = getEntryValue(this.figure.getMother().entrySet());
+        	Integer pid = getEntryValue(this.figure.getPrecededBy().entrySet());
+        	Integer sid = getEntryValue(this.figure.getSucceededBy().entrySet());
         	
-        	Set<Entry<String, Integer>> era = this.figure.getEra().entrySet();
-        	Entry<String, Integer> eraName = era.iterator().next();
-        	Integer eid = eraName.getValue();
-        	
-        	Set<Entry<String, Integer>> mother = this.figure.getMother().entrySet();
-        	Entry<String, Integer> motherName = mother.iterator().next();
-        	Integer mid = motherName.getValue();
-        	
-        	Set<Entry<String, Integer>> preceded = this.figure.getPrecededBy().entrySet();
-        	Entry<String, Integer> precededName = preceded.iterator().next();
-        	Integer pid = precededName.getValue();
-        	
-        	Set<Entry<String, Integer>> succeeded = this.figure.getSucceededBy().entrySet();
-        	Entry<String, Integer> succeededName = succeeded.iterator().next();
-        	Integer sid = succeededName.getValue();
-            
-        	
-            nameText.setText(this.figure.getName());
-            
+            nameText.setText(this.figure.getName());        
             bornText.setText(this.figure.getBorn());
             diedText.setText(this.figure.getDied());
             workTimeText.setText(this.figure.getWorkTime());
             
-          
-            eraText.setText(eraName.getKey());
-            fatherText.setText(fatherName.getKey());
-            motherText.setText(motherName.getKey());
-            precededByText.setText(precededName.getKey());
-            succeededByText.setText(succeededName.getKey());
-            
-            
-            
-        	
-            Era eraObj = Eras.collection.get(eid);
-           
+            eraText.setText(getEntryKey(this.figure.getEra().entrySet()));
+            fatherText.setText(getEntryKey(this.figure.getFather().entrySet()));
+            motherText.setText(getEntryKey(this.figure.getMother().entrySet()));
+            precededByText.setText(getEntryKey(this.figure.getPrecededBy().entrySet()));
+            succeededByText.setText(getEntryKey(this.figure.getSucceededBy().entrySet()));
+//            
+//            eraText.setText(eraName.getKey());
+//            fatherText.setText(fatherName.getKey());
+//            motherText.setText(motherName.getKey());
+//            precededByText.setText(precededName.getKey());
+//            succeededByText.setText(succeededName.getKey());
+                 	
+            Era eraObj = Eras.collection.get(eid);        
             HistoricalFigure fatherObj = HistoricalFigures.collection.get(fid);
             HistoricalFigure motherObj = HistoricalFigures.collection.get(mid);
             HistoricalFigure precededObj = HistoricalFigures.collection.get(pid);
@@ -133,7 +144,7 @@ public class FigureDetailController {
             }*/
             
             if(eraObj == null) {
-            	eraText.setText(eraName.getKey());
+            	eraText.setText(getEntryKey(this.figure.getEra().entrySet()));
             	eraText.setOnMouseClicked(null);
             	eraText.setFill(Color.web("#000000"));
             	eraText.setUnderline(false);

@@ -1,14 +1,10 @@
 package crawl;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import database.Events;
 import model.Event;
 
 public class CrawlEvent {
@@ -108,60 +104,8 @@ public class CrawlEvent {
 			crawlEventData(url);
 		}	
 	}
-	public static String nameFormat(String name) {
-		String[] arrayName = name.trim().split(" ");
-		for (int i = 0; i < arrayName.length; i++) {
-			String firstLetter = arrayName[i].substring(0, 1).toUpperCase();
-			String lastLetter = arrayName[i].substring(1).toLowerCase();
-			arrayName[i] = firstLetter + lastLetter;
-		}
-		name = name.join(" ", arrayName);
-		return name;
-	}
-	// Check existence
-	private static ArrayList<String> getHistoricalFigures(ArrayList<String> listHistoricalFigures,
-			ArrayList<String> historicalFigures, String text) {
-		for (String i : listHistoricalFigures) {
-			if (text.toUpperCase().contains(i) && !historicalFigures.contains(nameFormat(i)))
-				historicalFigures.add(nameFormat(i));
-		}
-
-		return historicalFigures;
-	}
-
-	// Get data from wiki
-	private static ArrayList<String> getHistoricalFiguresToWiki(ArrayList<String> listHistoricalFigures,
-			ArrayList<String> historicalFigures, String nameEvent, Element i) {
-		try {
-			for (Element j : i.children()) {
-				if (j.outerHtml().contains("</a>")) {
-					int commaIndex = nameEvent.length();
-					for (int k = 0; k < nameEvent.length(); k++)
-						if (nameEvent.charAt(k) == ',')
-							commaIndex = k;
-					if (listHistoricalFigures.contains(j.html().toUpperCase().replace("KHỞI NGHĨA", "").trim())) {
-						historicalFigures.add(nameFormat(j.html()).replace("Khởi Nghĩa", ""));
-					}
-					if (j.html().toUpperCase().equals(nameEvent.toUpperCase())) {
-						Document connectWiki = Jsoup.connect("https://vi.wikipedia.org" + j.attr("href")).get();
-						Elements elementsConnectWiki = connectWiki.select(".infobox > tbody > tr");
-						for (Element k : elementsConnectWiki) {
-							if (k.text().equals("Chỉ huy và lãnh đạo")) {
-								historicalFigures = getHistoricalFigures(listHistoricalFigures, historicalFigures,
-										k.nextElementSibling().text());
-							}
-						}
-					}
-				}
-			}
-		} catch (IOException e) {
-
-		}
-		return historicalFigures;
-	}
-
 	// Get data from NKS
-	private static ArrayList<String> getHistoricalFiguresToNKS(ArrayList<String> listHistoricalFigures,
+	private static ArrayList<String> getHistoricalFiguresFromNKS(
 			ArrayList<String> historicalFigures, String nameEvent) {
 		try {
 			int commaIndex = nameEvent.length();
@@ -179,10 +123,6 @@ public class CrawlEvent {
 									.replace("- NguoiKeSu.com", "").trim());
 						}
 					}
-				}
-				if (element.attr("href").contains("https://nguoikesu.com/dong-lich-su")) {
-					String text = Jsoup.connect(element.attr("href")).get().select("#jm-maincontent").text();
-					historicalFigures = getHistoricalFigures(listHistoricalFigures, historicalFigures, text);
 				}
 			}
 		} catch (IOException e) {
@@ -240,9 +180,6 @@ public class CrawlEvent {
 	}
 
 	public static void getDataFromHTML() {
-		ArrayList<String> listHistoricalFigures = new ArrayList<>();
-		String path = "https://vi.wikipedia.org";
-
 		String url = "https://vi.wikipedia.org/wiki/Ni%C3%AAn_bi%E1%BB%83u_l%E1%BB%8Bch_s%E1%BB%AD_Vi%E1%BB%87t_Nam";
 		Document doc = null;
 		try {
@@ -253,9 +190,7 @@ public class CrawlEvent {
 		Elements data1 = doc.select(".mw-parser-output > p");
 		Elements data2 = doc.select(".mw-parser-output > p+dl > dd");
 
-		int count = 0;
 //		 Data1
-
 		for (Element i : data1) {
 			ArrayList<String> historicalFigures = new ArrayList<>();
 			String date;
@@ -264,13 +199,10 @@ public class CrawlEvent {
 				date = "năm " + getDateFromHtml(i.html());
 				nameEvent = getEventFromHtml(i.html());
 
-				// lấy nhân vật lịch sử liên quan từ event
+				// Related Figure
 
-				historicalFigures = getHistoricalFiguresToWiki(listHistoricalFigures, historicalFigures, nameEvent, i);
-
-				if (historicalFigures.size() == 0) {
-					historicalFigures = getHistoricalFiguresToNKS(listHistoricalFigures, historicalFigures, nameEvent);
-				}
+				historicalFigures = getHistoricalFiguresFromNKS(historicalFigures, nameEvent);
+				
 				ArrayList<String> relatedFigures = new ArrayList<>();
 				for(String figure : historicalFigures) {
 					if(!figure.contains("- Lịch sử Việt Nam")&& !figure.contains("nhà")) 
@@ -283,8 +215,6 @@ public class CrawlEvent {
 			}
 			
 		}
-		
-		
 		// Data2
 		for (Element i : data2) {
 			ArrayList<String> historicalFigures = new ArrayList<>();
@@ -301,12 +231,8 @@ public class CrawlEvent {
 			nameEvent = getEventFromHtml(i.html());
 
 			// Related Figures
+			historicalFigures = getHistoricalFiguresFromNKS(historicalFigures, nameEvent);
 
-			historicalFigures = getHistoricalFiguresToWiki(listHistoricalFigures, historicalFigures, nameEvent, i);
-
-			if (historicalFigures.size() == 0) {
-				historicalFigures = getHistoricalFiguresToNKS(listHistoricalFigures, historicalFigures, nameEvent);
-			}
 			ArrayList<String> relatedFigures = new ArrayList<>();
 			for(String figure : historicalFigures) {
 				if(!figure.contains("- Lịch sử Việt Nam") && !figure.contains("nhà")) 
@@ -315,11 +241,7 @@ public class CrawlEvent {
 					relatedFigures.add(figure.substring(0,figure.indexOf("-")).trim()); 
 			}
 			new Event(nameEvent, date, "Chưa rõ", "Chưa rõ", "Chưa rõ", relatedFigures);
-			System.out.println(relatedFigures);
-			
-
 		}
-
 	}
 	public static void crawlData() {
 		crawlAllLink();

@@ -7,8 +7,8 @@ import model.HistoricalFigure;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class CrawlHistoricalFigure extends crawl.CrawlHelper {
-	private static ArrayList<String> figuresLink1 = new ArrayList<>();
+public class CrawlHistoricalFigure extends CrawlHelper {
+	private static ArrayList<String> figuresLink = new ArrayList<>();
 	//method for get all page
 	public static void crawlAllLinkFromLink1(){
 		
@@ -28,7 +28,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 			for (Element e : pageAddress.select("div div h2 a")) {
 				String res = e.attr("href");
 				//System.out.println("https://nguoikesu.com" + res);
-				figuresLink1.add("https://nguoikesu.com"+res);
+				figuresLink.add("https://nguoikesu.com"+res);
 				index++;
 			}
 			
@@ -43,7 +43,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 				for (Element e : pageAddress2.select("div div h2 a")) {
 					String res = e.attr("href");
 					//add to ArrayList
-					figuresLink1.add("https://nguoikesu.com"+res);
+					figuresLink.add("https://nguoikesu.com"+res);
 					index++;
 				}	
 			}
@@ -234,19 +234,18 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 			//if the page doesn't have table, get information from paragraph tag <p>
 			 Element contentBody = doc.select("div[class=com-content-article__body]").first();
 
-	            // Chỉ lấy ở thẻ p đầu tiên vì hầu như thông tin tập hợp ở đó
-	            // Có thể thiếu trường hợp
+	            // Take the first pTag
 	            Elements contentBodyElements = contentBody.children();
 
 	            for (Element item : contentBodyElements) {
 	                if (item.tagName().equals("p")) {
 	                    Element firstParagraph = item;
-	                    // Loc ra cac the chu thich
+	                    // Get notes
 	                    // [class~=(annotation).*]
 	                    firstParagraph.select("sup").remove();
-	                    // Lấy các thẻ a là thẻ con của p
-	                    Elements pATags = firstParagraph.select("a");
-	                    // Noi dung doan van ban sau khi loc
+	                    // Get children tag of p
+//	                    Elements pATags = firstParagraph.select("a");
+	                    // Content
 	                    String firstPContent = firstParagraph.text();
 
 //	                    Element firstBTag = firstParagraph.select("b").first();
@@ -257,13 +256,13 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	                    while (birthMatch.find()) {
 	                        String firstResult = birthMatch.group(0);
 
-	                        // Lay ra doan xau co format (...) => lay ... - đoạn text trong ngoặc
-	                        // Truong hop doan trong ngoac khong phai ngay sinh
+	                        // Take string have format (...) => Get ... - in () text
+	                        // Cases not DOB
 	                        Pattern checkValid = Pattern.compile("sinh|tháng|năm|-|–");
 	                        Matcher matchValid = checkValid.matcher(firstResult);
 
 	                        if (matchValid.find()) {
-	                            // Loai bo phan chu Han: ...,/; ... => lay phan ... sau
+	                            // Omit Chinese character: ...,/; ... => Get part after ...
 	                            int startIndex = firstResult.lastIndexOf(',');
 	                            if (startIndex == -1) {
 	                                startIndex = firstResult.lastIndexOf(';');
@@ -281,7 +280,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	                                    workTime = contentInParen;
 	                                }
 	                            } else {
-	                                // Chia ra nam sinh voi nam mat
+	                                // Seperate birth and died
 	                                String[] splitString = {};
 	                                if (contentInParen.contains("-")) {
 	                                    splitString = contentInParen.split("-");
@@ -301,15 +300,6 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	                            int start = firstPContent.indexOf(')');
 	                            firstPContent = firstPContent.substring(start + 1);
 	                            birthMatch = birthRegex.matcher(firstPContent);
-	                        }
-	                    }
-	                    for (Element a : pATags) {
-	                        String hrefValue = a.attr("href");
-	                        if (hrefValue.contains("nha-")) {
-	                            if (era.equals("Chưa rõ")) {
-	                                era = a.text();
-	                                break;
-	                            }
 	                        }
 	                    }
 	                                        
@@ -337,7 +327,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	}
 
 	public static void crawlDataFromLink1() {
-		for (String url : figuresLink1) {	
+		for (String url : figuresLink) {	
 			crawlFigures(url);
 		}
 	}
@@ -346,9 +336,6 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 		crawlAllLinkFromLink1();
 		crawlDataFromLink1();
 		crawlAllLinkFromLink2();
-	}
-	public static void main(String[] args) {
-		crawlData();
 	}
 
 }
