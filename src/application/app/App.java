@@ -5,6 +5,7 @@ import database.Events;
 import database.Festivals;
 import database.HistoricalFigures;
 import database.Sites;
+import helper.URLCreator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,8 +17,6 @@ import model.Era;
 
 import java.net.URL;
 import java.nio.file.FileSystems;
-
-import application.helper.URLCreator;
 
 
 public class App extends Application{

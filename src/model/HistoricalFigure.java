@@ -2,69 +2,24 @@ package model;
 
 
 import java.util.HashMap;
-import java.util.Set;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
-
 import database.*;
 
 public class HistoricalFigure extends HistoricalEntity{
-	
     private String born;
     private String died;
-    private String workTime;
-    
-    private HashMap<String, Integer> era = new HashMap<>();
-    private HashMap<String, Integer> father = new HashMap<>();
-    private HashMap<String, Integer> mother = new HashMap<>();
-    private HashMap<String, Integer> precededBy = new HashMap<>();
-    private HashMap<String, Integer> succeededBy = new HashMap<>();
-    private HistoricalFigures figure = new HistoricalFigures();
-    
-    //Constructors
-    public HistoricalFigure(){}
-    public HistoricalFigure(
-            String name,
-            String birth,
-            String died,         
-            String workTime,
-            String era,
-            String father,
-            String mother,
-            String preceded,
-            String succeeded
-            
-            
-    ) {
-        
-        
-        this.name = name;
-        this.born = birth;
-        this.died = died;
-        this.workTime = workTime;
-        this.era.put(era, null);
-        this.father.put(father, null);
-        this.mother.put(mother, null);
-        this.precededBy.put(preceded, null);
-        this.succeededBy.put(succeeded, null);
-        this.id = HistoricalFigures.collection.getId();
-        HistoricalFigures.collection.add(this);
-        //setId(countFigures);
-        
-        //HistoricalFigures.collection.add(this); ???
-    }
-    
-    
+    private String workTime;   
+    private HashMap<String, Integer> era;
+    private HashMap<String, Integer> father;
+    private HashMap<String, Integer> mother;
+    private HashMap<String, Integer> precededBy;
+    private HashMap<String, Integer> succeededBy;
+
     public String getBorn() {
         return born;
     }
 
     public String getWorkTime() {
         return workTime;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getDied() {
@@ -91,23 +46,6 @@ public class HistoricalFigure extends HistoricalEntity{
         return succeededBy;
     }
     
-    public void setBorn(String born) {
-        this.born = born;
-    }
-
-    public void setDied(String died) {
-        this.died = died;
-    }
-
-
-    public void setWorkTime(String workTime) {
-        this.workTime = workTime;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setEra(String name, Integer id) {
         this.era.put(name, id);
     }
@@ -128,12 +66,40 @@ public class HistoricalFigure extends HistoricalEntity{
         this.succeededBy.put(name, id);
     }
     
-    
-    
-    public void save(){
-        figure.writeJSON(this);
+    //Constructors
+    public HistoricalFigure(){}
+    public HistoricalFigure(
+            String name,
+            String birth,
+            String died,         
+            String workTime,
+            String era,
+            String father,
+            String mother,
+            String preceded,
+            String succeeded
+            
+            
+    ) {  
+    	this.era = new HashMap<>();
+    	this.father = new HashMap<>();
+    	this.mother = new HashMap<>();
+    	this.precededBy = new HashMap<>();
+    	this.succeededBy = new HashMap<>();
+        this.setName(name);
+        this.born = birth;
+        this.died = died;
+        this.workTime = workTime;
+        this.era.put(era, null);
+        this.father.put(father, null);
+        this.mother.put(mother, null);
+        this.precededBy.put(preceded, null);
+        this.succeededBy.put(succeeded, null);
+        this.setId(HistoricalFigures.collection.getId());
+        HistoricalFigures.collection.add(this);
     }
-    
-   
+    public void save(){
+        HistoricalFigures.writeJSON(this);
+    }
 
 }

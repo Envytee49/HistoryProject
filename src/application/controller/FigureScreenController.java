@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import application.helper.ObservableHelper;
-import application.helper.URLCreator;
 import database.HistoricalFigures;
+import helper.ObservableHelper;
+import helper.URLCreator;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;

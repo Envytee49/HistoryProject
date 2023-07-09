@@ -3,23 +3,20 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import crawl.*;
-
+import crawl.*; 
 import model.*;
 import database.*;
 
 public class Relation {
-	static Eras eras = new Eras();
-	static HistoricalFigures figures = new HistoricalFigures();
 	public static void crawlData() {
 		// Crawl all data of entities
-		CrawlFestival.crawlData();
+//		CrawlFestival.crawlData();
 		CrawlEvent.crawlData();
-		CrawlSite.crawlData();
-		CrawlEra.crawlData();
-		CrawlHistoricalFigure.crawlData();
+//		CrawlSite.crawlData();
+//		CrawlEra.crawlData();
+//		CrawlHistoricalFigure.crawlData();
 	}
+	// This method link Id of figure in figure to figure in relatedFigure in festival
 	public static void linkCharFes() {
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
         ArrayList<Festival> listOfFestivals = Festivals.collection.getEntityData();
@@ -35,10 +32,11 @@ public class Relation {
             }
         }    
     }
+	// This method link Id of figure in figure to figure in relatedFigure in era and vice versa
 	public static void linkCharEra() {
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
         ArrayList<Era> listOfEras = Eras.collection.getEntityData();
-
+        // Link figure to era
         for (Era era : listOfEras) {
             for (Map.Entry<String, Integer> entry : era.getListOfKings().entrySet()) {
             	if (entry.getKey().equals("")) continue;
@@ -51,6 +49,7 @@ public class Relation {
                 }    
             }
         } 
+        // Link era to figure
         for(HistoricalFigure figure : listOfFigures) {
         	Set<Entry<String, Integer>> entries = figure.getEra().entrySet();
         	Entry<String, Integer> entry = entries.iterator().next();
@@ -63,21 +62,28 @@ public class Relation {
         	}
         }
 	}
+	// This method link Id of figure in figure to figure in relatedFigure in event
 	public static void linkCharEvent() {
+		HistoricalFigures.queryJSON();
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
-        ArrayList<Event> listOfEvents = Events.collection.getEntityData();    
+        Events.queryJSON();
+        ArrayList<Event> listOfEvents = Events.collection.getEntityData();   
+        System.out.println(listOfEvents);
         for (Event event : listOfEvents) {
-            for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {
+            for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {   	
                 if (entry.getKey().equals("")) continue;
                 for (HistoricalFigure c : listOfFigures) {
                     if (c.getName().equalsIgnoreCase(entry.getKey())) {
+                    	System.out.println("in loop id is:"+ c.getId());
                         event.setRelatedFigure(entry.getKey(), c.getId());
                         break;
                     }
-                }    
+                }
+                System.out.println("hello");
             }
         } 
 	}
+	// This method link Id of figure in figure to figure in relatedFigure in site
 	public static void linkCharSite() {
 		 ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
 	     ArrayList<Site> listOfSites = Sites.collection.getEntityData();      
@@ -93,26 +99,22 @@ public class Relation {
 	            }
 	        } 
 	}
+	// This help with map to getKey
+	public static String getEntryName(Set<Entry<String, Integer>> entrySet) {
+	    Entry<String, Integer> entry = entrySet.iterator().next();
+	    return entry.getKey();
+	}
+	// This method link Id of figure in figure to figure in father, mother, precededBy, succeededBy in HistoricalFigure
 	public static void linkCharChar() {
 		
 		ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
         for (HistoricalFigure figure : listOfFigures) {
-        	Set<Entry<String, Integer>> father = figure.getFather().entrySet();
-        	Entry<String, Integer> fatherName = father.iterator().next();
-        	String fn = fatherName.getKey();
         	
-        	Set<Entry<String, Integer>> mother = figure.getMother().entrySet();
-        	Entry<String, Integer> motherName = mother.iterator().next();
-        	String mn = motherName.getKey();
-        	
-        	Set<Entry<String, Integer>> succeededBy = figure.getSucceededBy().entrySet();
-        	Entry<String, Integer> succeededName = succeededBy.iterator().next();
-        	String sn = succeededName.getKey();
-        	
-        	Set<Entry<String, Integer>> precededBy = figure.getPrecededBy().entrySet();
-        	Entry<String, Integer> precededName = precededBy.iterator().next();
-        	String pn = precededName.getKey();
-        	
+        	String fn = getEntryName(figure.getFather().entrySet());
+        	String mn = getEntryName(figure.getMother().entrySet());
+        	String sn = getEntryName(figure.getSucceededBy().entrySet());
+        	String pn = getEntryName(figure.getPrecededBy().entrySet());
+        	// Remove ( from string
             if (fn.contains("(") &&fn.lastIndexOf("(") > 0) {
             	fn = fn.substring(0, fn.lastIndexOf("(")).trim();
             }
@@ -128,6 +130,7 @@ public class Relation {
             if (sn.contains("(") &&sn.lastIndexOf("(") > 0) {
             	sn = sn.substring(0, sn.lastIndexOf("(")).trim();
             }
+            // Link figure to father, mother, succeededBy, precededBy
             for (HistoricalFigure figureToLink : listOfFigures) {
             	if(!fn.equals("Chưa rõ") && figureToLink.getName().equalsIgnoreCase(fn)) {
             		figure.setFather(fn, figureToLink.getId());
@@ -156,20 +159,13 @@ public class Relation {
 		// Step 2
 		// Save entities data to JSON files
 		
-		//Create instances
-		Festivals festivals = new Festivals();
-		Events events = new Events();
-		HistoricalFigures figures = new HistoricalFigures();
-		Sites sites = new Sites();
-		Eras eras = new Eras();
-		
 		// Save entities data to JSON files
 		
-		eras.saveToJSON();
-		figures.saveToJSON();
-		festivals.saveToJSON();	
-		events.saveToJSON();
-		sites.saveToJSON();
+		Eras.saveToJSON();
+		HistoricalFigures.saveToJSON();
+		Festivals.saveToJSON();	
+		Events.saveToJSON();
+		Sites.saveToJSON();
 }
 }
 

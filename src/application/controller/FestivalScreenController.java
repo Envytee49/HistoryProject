@@ -3,10 +3,10 @@ package application.controller;
 import java.io.IOException;
 import java.util.function.Predicate;
 
-import application.helper.ObservableHelper;
-import application.helper.URLCreator;
 import database.Eras;
 import database.Festivals;
+import helper.ObservableHelper;
+import helper.URLCreator;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;

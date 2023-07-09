@@ -10,8 +10,7 @@ public class Event extends HistoricalEntity {
 	private String location;
 	private String cause;
 	private String result;
-	private Map<String, Integer> relatedFigure = new HashMap<>();
-	private Events events = new Events();
+	private Map<String, Integer> relatedFigure;
 	public String getDate() {
 		return date;
 	}
@@ -30,18 +29,21 @@ public class Event extends HistoricalEntity {
 	public void setRelatedFigure(String name, Integer id) {
 		this.relatedFigure.put(name, id);
 	}
+	// Default constructor to apply ObjectMapper
+	public Event() {}
 	public Event(String name,
 					String date, 
 					String location, 
 					String cause,
 					String result,  
 					ArrayList<String> relatedFigure) {
-		this.name = name;
+		this.relatedFigure = new HashMap<>();
+		this.setName(name);
 		this.date = date;
 		this.location = location;
 		this.cause = cause;
 		this.result = result;
-		this.id = Events.collection.getId();
+		this.setId(Events.collection.getId());
 		for(String entity : relatedFigure) {
 			this.relatedFigure.put(entity, null);
 		}
@@ -49,11 +51,10 @@ public class Event extends HistoricalEntity {
 		Events.collection.add(this); 
 		
 	}
-	// Default constructor to apply ObjectMapper
-	public Event() {}
+		
 	// Save to json 'this' object
 	@Override
 	public void save() {
-		events.writeJSON(this);
+		Events.writeJSON(this);
 	}
 }

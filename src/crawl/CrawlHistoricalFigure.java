@@ -3,13 +3,67 @@ import org.jsoup.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import database.HistoricalFigures;
 import model.HistoricalFigure;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class CrawlHistoricalFigure extends crawl.CrawlHelper {
-	private static ArrayList<String> figuresLink1 = new ArrayList<>();
+public class CrawlHistoricalFigure {
+	private static ArrayList<String> figuresLink = new ArrayList<>();
 	//method for get all page
+	//implement method for checking data in table
+		public static boolean workTimeCheck(String workTime) {
+	        return workTime.equalsIgnoreCase("Trị vì") ||
+	                workTime.equalsIgnoreCase("trị vì") ||
+	                workTime.equalsIgnoreCase("Tại vị") ||
+	                workTime.equalsIgnoreCase("Nhiệm kỳ") ||
+	                workTime.equalsIgnoreCase("Năm tại ngũ") ||
+	                workTime.equalsIgnoreCase("Hoạt động");
+	    }
+		
+		public static boolean fatherCheck(String father) {
+	        return father.equalsIgnoreCase("Thân phụ") ||
+	                father.equalsIgnoreCase("Cha");                
+	    }
+		
+		public static boolean motherCheck(String mother) {
+	        return mother.equalsIgnoreCase("Thân mẫu") ||
+	                mother.equalsIgnoreCase("Mẹ");
+	                
+	    }
+		
+		public static boolean parentCheck(String parent) {
+	        return parent.equalsIgnoreCase("Bố mẹ") ||
+	                parent.equalsIgnoreCase("Cha mẹ");
+	    }
+		
+		
+		
+		public static boolean birthCheck(String birth) {
+	        return birth.equalsIgnoreCase("Ngày sinh") ||
+	                birth.equalsIgnoreCase("Sinh");
+	    }
+		
+		public static boolean realNameCheck(String realName) {
+	        return realName.equalsIgnoreCase("Húy") ||
+	                realName.equalsIgnoreCase("Tên thật") ||
+	                realName.equalsIgnoreCase("tên thật") ||
+	                realName.equalsIgnoreCase("Tên đầy đủ") ||
+	                realName.equalsIgnoreCase("Tên húy");
+	    }
+		
+		public static boolean diedCheck(String died) {
+			return died.equalsIgnoreCase("Mất") ||
+					died.equalsIgnoreCase("Chết");
+		}
+		
+		public static boolean eraCheck(String era) {
+	        return era.equalsIgnoreCase("Hoàng tộc") ||
+	                era.equalsIgnoreCase("Triều đại") ||
+	                era.equalsIgnoreCase("Gia tộc") ||
+	                era.equalsIgnoreCase("Kỷ nguyên");
+	    }
 	public static void crawlAllLinkFromLink1(){
 		
 		String url1 = "https://nguoikesu.com/nhan-vat";
@@ -28,7 +82,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 			for (Element e : pageAddress.select("div div h2 a")) {
 				String res = e.attr("href");
 				//System.out.println("https://nguoikesu.com" + res);
-				figuresLink1.add("https://nguoikesu.com"+res);
+				figuresLink.add("https://nguoikesu.com"+res);
 				index++;
 			}
 			
@@ -43,7 +97,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 				for (Element e : pageAddress2.select("div div h2 a")) {
 					String res = e.attr("href");
 					//add to ArrayList
-					figuresLink1.add("https://nguoikesu.com"+res);
+					figuresLink.add("https://nguoikesu.com"+res);
 					index++;
 				}	
 			}
@@ -51,9 +105,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 		catch(Exception ex){
 			ex.printStackTrace();
 			
-		}
-		
-		
+		}	
 	}
 	public static void crawlAllLinkFromLink2() {
 		String wikiUrl = "https://vi.wikipedia.org/";
@@ -120,7 +172,12 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 						System.out.println("Kế nhiệm: " + succeededBy);
 						System.out.println("Tiền nhiệm: " + preceededBy);
 						System.out.println("Kỷ nguyên: " + era);
-						new HistoricalFigure(name, born, died, workTime, era, father, mother, succeededBy, preceededBy);
+						
+						
+						
+							new HistoricalFigure(name, born, died, workTime, era, father, mother, succeededBy, preceededBy);
+						
+							
 					}
 				}
 				
@@ -234,19 +291,18 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 			//if the page doesn't have table, get information from paragraph tag <p>
 			 Element contentBody = doc.select("div[class=com-content-article__body]").first();
 
-	            // Chỉ lấy ở thẻ p đầu tiên vì hầu như thông tin tập hợp ở đó
-	            // Có thể thiếu trường hợp
+	            // Take the first pTag
 	            Elements contentBodyElements = contentBody.children();
 
 	            for (Element item : contentBodyElements) {
 	                if (item.tagName().equals("p")) {
 	                    Element firstParagraph = item;
-	                    // Loc ra cac the chu thich
+	                    // Get notes
 	                    // [class~=(annotation).*]
 	                    firstParagraph.select("sup").remove();
-	                    // Lấy các thẻ a là thẻ con của p
-	                    Elements pATags = firstParagraph.select("a");
-	                    // Noi dung doan van ban sau khi loc
+	                    // Get children tag of p
+//	                    Elements pATags = firstParagraph.select("a");
+	                    // Content
 	                    String firstPContent = firstParagraph.text();
 
 //	                    Element firstBTag = firstParagraph.select("b").first();
@@ -257,13 +313,13 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	                    while (birthMatch.find()) {
 	                        String firstResult = birthMatch.group(0);
 
-	                        // Lay ra doan xau co format (...) => lay ... - đoạn text trong ngoặc
-	                        // Truong hop doan trong ngoac khong phai ngay sinh
+	                        // Take string have format (...) => Get ... - in () text
+	                        // Cases not DOB
 	                        Pattern checkValid = Pattern.compile("sinh|tháng|năm|-|–");
 	                        Matcher matchValid = checkValid.matcher(firstResult);
 
 	                        if (matchValid.find()) {
-	                            // Loai bo phan chu Han: ...,/; ... => lay phan ... sau
+	                            // Omit Chinese character: ...,/; ... => Get part after ...
 	                            int startIndex = firstResult.lastIndexOf(',');
 	                            if (startIndex == -1) {
 	                                startIndex = firstResult.lastIndexOf(';');
@@ -281,7 +337,7 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	                                    workTime = contentInParen;
 	                                }
 	                            } else {
-	                                // Chia ra nam sinh voi nam mat
+	                                // Seperate birth and died
 	                                String[] splitString = {};
 	                                if (contentInParen.contains("-")) {
 	                                    splitString = contentInParen.split("-");
@@ -303,15 +359,6 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	                            birthMatch = birthRegex.matcher(firstPContent);
 	                        }
 	                    }
-	                    for (Element a : pATags) {
-	                        String hrefValue = a.attr("href");
-	                        if (hrefValue.contains("nha-")) {
-	                            if (era.equals("Chưa rõ")) {
-	                                era = a.text();
-	                                break;
-	                            }
-	                        }
-	                    }
 	                                        
 	                }
 	                	                			
@@ -326,8 +373,14 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 			System.out.println("Tiền nhiệm: " + preceededBy);
 			System.out.println("Kỷ nguyên: " + era);
 //			
-			
-			if (name != null) {
+			boolean check = false;
+			for(HistoricalFigure figure : HistoricalFigures.collection.getEntityData()) {
+				if(name.equals(figure.getName())) {
+					 check = true;
+					 break;
+				}
+			}
+			if (!check) {
 				new HistoricalFigure(name, born, died, workTime, era, father, mother, succeededBy, preceededBy);
 			}
 		}
@@ -337,18 +390,16 @@ public class CrawlHistoricalFigure extends crawl.CrawlHelper {
 	}
 
 	public static void crawlDataFromLink1() {
-		for (String url : figuresLink1) {	
+		for (String url : figuresLink) {	
 			crawlFigures(url);
 		}
 	}
 	public static void crawlData(){
 		//get link
+		crawlAllLinkFromLink2();
 		crawlAllLinkFromLink1();
 		crawlDataFromLink1();
-		crawlAllLinkFromLink2();
-	}
-	public static void main(String[] args) {
-		crawlData();
+		
 	}
 
 }

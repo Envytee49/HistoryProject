@@ -2,7 +2,7 @@ package application.controller;
 
 import java.io.IOException;
 
-import application.helper.URLCreator;
+import helper.URLCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

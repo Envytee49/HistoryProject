@@ -1,22 +1,21 @@
 package database;
+import helper.JsonHelper;
 import model.Festival;
-public class Festivals implements DataManipulation{
+public class Festivals{
 	// This is the database for the entity 
 	public static EntityData<Festival> collection = new EntityData<>();
 	// This is an object to interact with data
-	private JsonHelper<Festival> json = new JsonHelper<>();
+	private static JsonHelper<Festival> json = new JsonHelper<>();
 	// Folder name
-	private String dirName = "/Festival";
+	private static String dirName = "/Festival";
 	// Write every object to json files
-	@Override
-	public void writeJSON(Object object) {
+	public static void writeJSON(Object object) {
 		String fileName = dirName + "/" + ((Festival) object).getId() + ".json";
 		json.writeJSON(fileName, object);
 	}
 	// Query from json files back to objects 
 	// add it to the database 'collection'
-	@Override
-	public void queryJSON() {
+	public static void queryJSON() {
 		collection.setEntityData(json.queryJSON(dirName, Festival.class));
 		collection.sortById();
 	}
@@ -24,8 +23,7 @@ public class Festivals implements DataManipulation{
 	 * For every object in the 'collection' database 
 	 * Save it in JSON file
 	 */
-	@Override
-	public void saveToJSON() {
+	public static void saveToJSON() {
 		for(Festival fes : collection.getEntityData()) {
 			fes.save();
 		}

@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import application.author.Member;
 import application.author.MemberList;
-import application.helper.ImagePath;
-import application.helper.URLCreator;
+import helper.ImagePath;
+import helper.URLCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

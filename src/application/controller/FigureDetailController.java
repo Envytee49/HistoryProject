@@ -5,9 +5,9 @@ import java.util.Set;
 
 import java.util.Map.Entry;
 
-import application.helper.URLCreator;
 import database.Eras;
 import database.HistoricalFigures;
+import helper.URLCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
