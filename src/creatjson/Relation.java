@@ -35,6 +35,7 @@ public class Relation {
 	// This method link Id of figure in figure to figure in relatedFigure in era and vice versa
 	public static void linkCharEra() {
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
+        Eras.queryJSON();
         ArrayList<Era> listOfEras = Eras.collection.getEntityData();
         // Link figure to era
         for (Era era : listOfEras) {
@@ -65,10 +66,9 @@ public class Relation {
 	// This method link Id of figure in figure to figure in relatedFigure in event
 	public static void linkCharEvent() {
 		HistoricalFigures.queryJSON();
+		Events.queryJSON();
         ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
-        Events.queryJSON();
         ArrayList<Event> listOfEvents = Events.collection.getEntityData();   
-        System.out.println(listOfEvents);
         for (Event event : listOfEvents) {
             for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {   	
                 if (entry.getKey().equals("")) continue;
@@ -79,12 +79,25 @@ public class Relation {
                         break;
                     }
                 }
-                System.out.println("hello");
             }
         } 
+        
+        for(HistoricalFigure figure : listOfFigures) {
+            for(Event event : listOfEvents) {
+                for (Map.Entry<String, Integer> entry : event.getRelatedFigure().entrySet()) {
+                    if (entry.getKey().equals("")) continue;
+                    if (entry.getValue() == null) continue;
+                    if(figure.getId() == entry.getValue().intValue()) {
+                        figure.setRelatedEvent(event.getName(), event.getId());
+                    }
+                }
+            }
+        }
 	}
 	// This method link Id of figure in figure to figure in relatedFigure in site
 	public static void linkCharSite() {
+//		HistoricalFigures.queryJSON();
+		Sites.queryJSON();
 		 ArrayList<HistoricalFigure> listOfFigures = HistoricalFigures.collection.getEntityData();
 	     ArrayList<Site> listOfSites = Sites.collection.getEntityData();      
 	        for (Site site : listOfSites) {
@@ -98,6 +111,17 @@ public class Relation {
 	                }    
 	            }
 	        } 
+	        for(HistoricalFigure figure : listOfFigures) {
+	            for(Site site : listOfSites) {
+	                for (Map.Entry<String, Integer> entry : site.getRelatedFigure().entrySet()) {
+	                    if (entry.getKey().equals("")) continue;
+	                    if (entry.getValue() == null) continue;
+	                    if(figure.getId() == entry.getValue().intValue()) {
+	                        figure.setRelatedSite(site.getName(), site.getId());
+	                    }
+	                }
+	            }
+	        }
 	}
 	// This help with map to getKey
 	public static String getEntryName(Set<Entry<String, Integer>> entrySet) {
@@ -151,21 +175,20 @@ public class Relation {
 		// Step 1
 		// This part create relation by setting the 'value' as 'key'
 		// ... implementation
-		linkCharEra();
+//		linkCharEra();
 		linkCharEvent();
-		linkCharFes();
-		linkCharChar();
+//		linkCharFes();
+//		linkCharChar();
 		linkCharSite();
 		// Step 2
 		// Save entities data to JSON files
 		
 		// Save entities data to JSON files
-		
-		Eras.saveToJSON();
+//		Eras.saveToJSON();
 		HistoricalFigures.saveToJSON();
-		Festivals.saveToJSON();	
-		Events.saveToJSON();
-		Sites.saveToJSON();
+//		Festivals.saveToJSON();	
+//		Events.saveToJSON();
+//		Sites.saveToJSON();
 }
 }
 

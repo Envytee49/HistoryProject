@@ -6,7 +6,9 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import database.Eras;
+import database.Events;
 import database.HistoricalFigures;
+import database.Sites;
 import helper.URLCreator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,11 +18,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Era;
+import model.Event;
 import model.HistoricalFigure;
+import model.Site;
 
 public class FigureDetailController {
 
@@ -50,6 +55,13 @@ public class FigureDetailController {
 
     @FXML
     private Text succeededByText;
+    
+    @FXML
+    private FlowPane relatedEventFlowPane;
+    
+    @FXML
+    private FlowPane relatedSiteFlowPane;
+    
     
     @FXML
     private SideBarController sideBarController;
@@ -132,6 +144,52 @@ public class FigureDetailController {
             	eraText.setText("Chưa rõ");
             }*/
             
+            for(Map.Entry<String, Integer> entry : figure.getRelatedEvent().entrySet()){
+                Text eventText = new Text(entry.getKey());
+                if(entry.getValue() != null){
+                	eventText.setFill(Color.web("#3498db"));
+                	eventText.setUnderline(true);
+                	eventText.setOnMouseClicked(mouseEvent -> {
+                        Event event = Events.collection.get(entry.getValue());
+                        try {
+                            FXMLLoader loader = new FXMLLoader(URLCreator.createURLFromPath("/application/view/EventDetail.fxml"));
+                            Parent root = loader.load();
+                            EventDetailController controller = loader.getController();
+                            controller.setEvent(event);
+                            Scene scene = new Scene(root);
+                            Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
+                    });
+                }
+                relatedEventFlowPane.getChildren().add(eventText);
+            }
+            for(Map.Entry<String, Integer> entry : figure.getRelatedSite().entrySet()){
+                Text siteText = new Text(entry.getKey());
+                if(entry.getValue() != null){
+                	siteText.setFill(Color.web("#3498db"));
+                	siteText.setUnderline(true);
+                	siteText.setOnMouseClicked(mouseEvent -> {
+                        Site site = Sites.collection.get(entry.getValue());
+                        try {
+                            FXMLLoader loader = new FXMLLoader(URLCreator.createURLFromPath("/application/view/SiteDetail.fxml"));
+                            Parent root = loader.load();
+                            SiteDetailController controller = loader.getController();
+                            controller.setHistoricSite(site);
+                            Scene scene = new Scene(root);
+                            Stage stage = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
+                    });
+                }
+                relatedSiteFlowPane.getChildren().add(siteText);
+            }
             if(eraObj == null) {
             	eraText.setText(eraName.getKey());
             	eraText.setOnMouseClicked(null);

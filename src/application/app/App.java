@@ -36,18 +36,12 @@ public class App extends Application{
 	        stage.setResizable(false);
 	        stage.setFullScreen(true);
 	        stage.show();
-	        
-	        Eras eras = new Eras();
-	        Events events = new Events();
-	        Festivals festivals = new Festivals();
-	        Sites sites = new Sites();
-	        HistoricalFigures figures = new HistoricalFigures();
-	        
-	        eras.queryJSON();
-	        events.queryJSON();
-	        festivals.queryJSON();
-	        sites.queryJSON();
-	        figures.queryJSON();
+
+	        Eras.queryJSON();
+	        Events.queryJSON();
+	        Festivals.queryJSON();
+	        Sites.queryJSON();
+	        HistoricalFigures.queryJSON();
 	        
 	        
 		}catch(Exception e) {

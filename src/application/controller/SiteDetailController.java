@@ -63,6 +63,7 @@ public class SiteDetailController {
         approvedText.setText(site.getApproved());
         
         for (Map.Entry<String, Integer> entry : site.getRelatedFigure().entrySet()){
+        	
             Text figureText = new Text(entry.getKey());
             if(entry.getValue() != null) {
                 figureText.setFill(Color.web("#3498db"));
@@ -82,8 +83,9 @@ public class SiteDetailController {
                         e.printStackTrace();
                     }
                 });
+                relatedCharsFlowPane.getChildren().add(figureText);
             }
-            relatedCharsFlowPane.getChildren().add(figureText);
+//            relatedCharsFlowPane.getChildren().add(figureText);
         }
     }
 }

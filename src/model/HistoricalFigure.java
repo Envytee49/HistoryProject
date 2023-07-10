@@ -13,19 +13,26 @@ public class HistoricalFigure extends HistoricalEntity{
     private HashMap<String, Integer> mother;
     private HashMap<String, Integer> precededBy;
     private HashMap<String, Integer> succeededBy;
-
+    private HashMap<String, Integer> relatedEvent;
+    private HashMap<String, Integer> relatedSite;
     public String getBorn() {
         return born;
     }
 
-    public String getWorkTime() {
+	public String getWorkTime() {
         return workTime;
     }
 
     public String getDied() {
         return died;
     }
-    
+    public HashMap<String, Integer> getRelatedEvent() {
+		return relatedEvent;
+	}
+
+	public HashMap<String, Integer> getRelatedSite() {
+		return relatedSite;
+	}
     public HashMap<String, Integer> getEra() {
         return era;
     }
@@ -65,7 +72,12 @@ public class HistoricalFigure extends HistoricalEntity{
     public void setSucceededBy(String name, Integer id) {
         this.succeededBy.put(name, id);
     }
-    
+    public void setRelatedEvent(String name, Integer id) {
+		this.relatedEvent.put(name, id);
+	}
+    public void setRelatedSite(String name, Integer id) {
+    	this.relatedSite.put(name, id);
+    }
     //Constructors
     public HistoricalFigure(){}
     public HistoricalFigure(
@@ -81,6 +93,8 @@ public class HistoricalFigure extends HistoricalEntity{
             
             
     ) {  
+    	this.relatedEvent = new HashMap<>();
+    	this.relatedSite = new HashMap<>();
     	this.era = new HashMap<>();
     	this.father = new HashMap<>();
     	this.mother = new HashMap<>();
