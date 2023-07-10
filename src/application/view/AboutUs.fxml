@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@../stylesheet/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.AboutUsController">
+   <left>
+      <fx:include fx:id="sideBar" source="SideBar.fxml" />
+   </left>
+   <center>
+      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onClickReturn" text="Quay lại" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Nhóm 14" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="150.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER" spacing="30.0">
+                     <children>
+                        <ImageView fitHeight="300.0" fitWidth="400.0" onMouseClicked="#toThuan" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/thuan.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label onMouseClicked="#toThuan" text="Nguyễn Viết Thuận">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" onMouseClicked="#toHieu" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/hieuchon.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label onMouseClicked="#toHieu" text="Nguyễn Văn Hiếu">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="30.0">
+                     <children>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" onMouseClicked="#toPhong" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/phong.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label onMouseClicked="#toPhong" text="Thân Hải Phong">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" onMouseClicked="#toTam" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/tam.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label onMouseClicked="#toTam" text="Nguyễn Hà Tâm">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="30.0">
+                     <children>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" onMouseClicked="#toHung" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/hung.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label onMouseClicked="#toHung" text="Nguyễn Chấn Hưng">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="300.0" fitWidth="200.0" onMouseClicked="#toDuong" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/duong.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label onMouseClicked="#toDuong" text="Nguyễn Văn Dương">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
