@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@../stylesheet/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <fx:include fx:id="sideBar" source="SideBar.fxml" />
+   </left>
+   <center>
+      <VBox spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Label text="Ứng Dụng Sổ Tay Tìm Hiểu Lịch Sử Việt Nam">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="800.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chào mừng bạn đến với ứng dụng tìm kiếm thông tin lịch sử Việt Nam!" textAlignment="JUSTIFY" wrappingWidth="1000.0">
+                     <font>
+                        <Font name="Calibri" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="800.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bạn đang tìm kiếm những thông tin quan trọng về lịch sử Việt Nam? Không cần phải lo lắng nữa! Ứng dụng của nhóm 14 sẽ giúp bạn khám phá không chỉ về những nhân vật lịch sử quan trọng, những triều đại trong lịch sử nước ta, mà còn về những sự kiện đáng nhớ, những lễ hội truyền thống và những di tích lịch sử đặc biệt." textAlignment="JUSTIFY" wrappingWidth="1000.0">
+                     <font>
+                        <Font name="Calibri" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="800.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Với ứng dụng của chúng tôi, bạn sẽ có thể dễ dàng tìm kiếm thông tin về mọi khía cạnh của lịch sử Việt Nam. Bạn chỉ cần nhập số thứ tự hoặc tên nhân vật, triều đại, sự kiện, lễ hội hoặc di tích bạn quan tâm trên mỗi cửa sổ tìm kiếm và ứng dụng sẽ cung cấp cho bạn những kết quả chi tiết và chính xác nhất." textAlignment="JUSTIFY" wrappingWidth="1000.0">
+                     <font>
+                        <Font name="Calibri" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="800.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Với ứng dụng tìm kiếm thông tin lịch sử Việt Nam, chúng tôi hy vọng sẽ giúp bạn nắm vững kiến thức về quá khứ vĩ đại của đất nước và khám phá thêm nhiều điều thú vị. Bắt đầu khám phá ngay hôm nay thôi!" textAlignment="JUSTIFY" wrappingWidth="1000.0">
+                     <font>
+                        <Font name="Calibri" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox prefHeight="50.0" prefWidth="800.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chân thành cảm ơn bạn đã sử dụng ứng dụng của chúng tôi. Hãy tận hưởng hành trình khám phá lịch sử Việt Nam cùng chúng tôi!" textAlignment="JUSTIFY" wrappingWidth="1000.0">
+                     <font>
+                        <Font name="Calibri" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

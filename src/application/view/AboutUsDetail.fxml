@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@../stylesheet/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.AboutUsDetailController">
+   <left>
+      <fx:include fx:id="sideBar" source="SideBar.fxml" />
+   </left>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onClickReturn" text="Quay lại" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="60.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox>
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label prefWidth="200.0" text="Họ và tên">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="memNameText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="memNameText" wrappingWidth="400.0">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label prefWidth="200.0" text="Mã số sinh viên">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="codeText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="codeText" wrappingWidth="400.0">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label prefWidth="200.0" text="Vai trò">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="roleText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="roleText" wrappingWidth="400.0">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label prefWidth="200.0" text="Đóng góp">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Text fx:id="contributeText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="contributeText" wrappingWidth="400.0">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="memImageView" fitHeight="600.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/thuan.jpg" />
+                     </image>
+                     <effect>
+                        <Glow level="0.0" />
+                     </effect>
+                     <HBox.margin>
+                        <Insets left="300.0" />
+                     </HBox.margin></ImageView>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
